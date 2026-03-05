@@ -270,6 +270,12 @@ export class App implements AfterViewInit, OnDestroy {
     this.activeCreationTab.set(i);
   }
 
+  badMediaTab = 0;
+  fullscreenOpen = false;
+
+  openFullscreen() { this.fullscreenOpen = true; }
+  closeFullscreen() { this.fullscreenOpen = false; }
+
   severityColor(s: string): string {
     if (s === 'CRITICAL') return '#FF6B35';
     if (s === 'HIGH') return '#f59e0b';

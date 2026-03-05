@@ -905,26 +905,88 @@
           <div class="flex-1 h-px" style="background:linear-gradient(to right,rgba(255,107,53,0.2),transparent);"></div>
         </div>
 
-        <!-- Video placeholder -->
-        <div class="rounded-2xl overflow-hidden mb-6" style="border:1px solid rgba(255,107,53,0.2);">
-          <div class="relative flex items-center justify-center"
-               style="background:linear-gradient(135deg,rgba(255,107,53,0.06) 0%,rgba(5,5,8,0.9) 100%);min-height:220px;">
-            <div class="absolute inset-0 grid-bg opacity-30"></div>
-            <div class="relative z-10 flex flex-col items-center gap-4 text-center px-6">
-              <div class="w-16 h-16 rounded-full flex items-center justify-center"
-                   style="background:rgba(255,107,53,0.15);border:2px solid rgba(255,107,53,0.4);">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="#FF6B35">
-                  <polygon points="5 3 19 12 5 21 5 3"/>
-                </svg>
-              </div>
-              <div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#FF6B35;letter-spacing:0.1em;margin-bottom:4px;">VIDEO COMING SOON</div>
-                <div style="font-size:1rem;font-weight:700;color:#f0f0ff;">Bad Claude Code practices — real examples</div>
-                <div style="font-size:0.8rem;color:#8888aa;margin-top:4px;">How token waste, vague prompts, and no-review workflows break teams</div>
+        <!-- Media viewer: video + image tabs with fullscreen -->
+        <div class="rounded-2xl overflow-hidden mb-6" style="border:1px solid rgba(255,107,53,0.25);">
+          <!-- Tab bar -->
+          <div class="flex items-center gap-0" style="background:rgba(13,13,28,1);border-bottom:1px solid rgba(255,107,53,0.15);">
+            <button (click)="badMediaTab=0"
+                    class="px-5 py-3 transition-all"
+                    style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;border:none;cursor:pointer;"
+                    [style.color]="badMediaTab===0 ? '#FF6B35' : '#4a4a6a'"
+                    [style.borderBottom]="badMediaTab===0 ? '2px solid #FF6B35' : '2px solid transparent'"
+                    [style.background]="'transparent'">
+              ▶ Video
+            </button>
+            <button (click)="badMediaTab=1"
+                    class="px-5 py-3 transition-all"
+                    style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;border:none;cursor:pointer;"
+                    [style.color]="badMediaTab===1 ? '#FF6B35' : '#4a4a6a'"
+                    [style.borderBottom]="badMediaTab===1 ? '2px solid #FF6B35' : '2px solid transparent'"
+                    [style.background]="'transparent'">
+              ⚠ Real Case
+            </button>
+            <div class="flex-1"></div>
+            <!-- Fullscreen button -->
+            <button (click)="openFullscreen()"
+                    class="px-4 py-2 mx-2 rounded-lg transition-all hover:scale-105"
+                    style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:#8888aa;background:rgba(255,255,255,0.04);border:1px solid #1e1e38;cursor:pointer;letter-spacing:0.06em;">
+              ⛶ fullscreen
+            </button>
+          </div>
+
+          <!-- Video panel -->
+          @if (badMediaTab === 0) {
+            <div class="relative" style="background:#050508;">
+              <video #badVideo controls preload="metadata"
+                     style="width:100%;max-height:420px;display:block;background:#000;"
+                     poster="/bad-practices-image.jpeg">
+                <source src="/bad-practices-video.mp4" type="video/mp4">
+              </video>
+              <div class="absolute top-3 left-3 px-2 py-1 rounded"
+                   style="background:rgba(255,107,53,0.15);border:1px solid rgba(255,107,53,0.3);">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:#FF6B35;letter-spacing:0.1em;">ANTI-PATTERN DEMO</span>
               </div>
             </div>
-          </div>
+          }
+
+          <!-- Image panel -->
+          @if (badMediaTab === 1) {
+            <div class="relative flex items-center justify-center" style="background:#050508;min-height:280px;">
+              <img src="/bad-practices-image.jpeg" alt="Real case: vibe-coded startup exploited"
+                   style="max-width:100%;max-height:480px;object-fit:contain;display:block;cursor:zoom-in;"
+                   (click)="openFullscreen()"/>
+              <div class="absolute top-3 left-3 px-2 py-1 rounded"
+                   style="background:rgba(255,107,53,0.15);border:1px solid rgba(255,107,53,0.3);">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:#FF6B35;letter-spacing:0.1em;">REAL INCIDENT</span>
+              </div>
+            </div>
+          }
         </div>
+
+        <!-- Fullscreen overlay -->
+        @if (fullscreenOpen) {
+          <div class="fixed inset-0 z-50 flex items-center justify-center"
+               style="background:rgba(0,0,0,0.95);backdrop-filter:blur(8px);"
+               (click)="closeFullscreen()">
+            <button (click)="closeFullscreen()"
+                    class="absolute top-5 right-6 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
+                    style="background:rgba(255,255,255,0.08);border:1px solid #1e1e38;color:#f0f0ff;font-size:1.2rem;cursor:pointer;z-index:51;">
+              ✕
+            </button>
+            @if (badMediaTab === 0) {
+              <video controls autoplay
+                     style="max-width:92vw;max-height:88vh;border-radius:12px;box-shadow:0 0 80px rgba(255,107,53,0.2);"
+                     (click)="$event.stopPropagation()">
+                <source src="/bad-practices-video.mp4" type="video/mp4">
+              </video>
+            }
+            @if (badMediaTab === 1) {
+              <img src="/bad-practices-image.jpeg" alt="Real case"
+                   style="max-width:92vw;max-height:88vh;border-radius:12px;object-fit:contain;box-shadow:0 0 80px rgba(255,107,53,0.2);"
+                   (click)="$event.stopPropagation()"/>
+            }
+          </div>
+        }
 
         <!-- Bad practices list -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
