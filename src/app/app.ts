@@ -15,154 +15,214 @@ export class App implements AfterViewInit, OnDestroy {
   readonly activeCreationTab = signal(0);
 
   private readonly phrases = [
-    'autonomous tasks', 'parallel workflows', 'multi-agent systems', 'persistent memory', 'code at scale',
+    'best practices', 'context engineering', 'skill creation', 'agent workflows', 'token optimization',
   ];
   private phraseIndex = 0;
   private charIndex = 0;
   private isDeleting = false;
   private typingTimer: ReturnType<typeof setTimeout> | null = null;
 
-  readonly capabilities = [
-    { icon: 'autonomous', title: 'Autonomous Execution', description: 'Agents independently decompose complex tasks, write and run code, handle errors, and iterate — all without human intervention.', tag: 'CORE', color: '#00F5D4' },
-    { icon: 'parallel', title: 'Parallel Orchestration', description: 'Spawn multiple sub-agents that execute simultaneously, reducing hours of sequential work to minutes of parallel processing.', tag: 'POWER', color: '#7C3AED' },
-    { icon: 'memory', title: 'Persistent Memory', description: 'Agents maintain institutional knowledge across sessions — remembering patterns, conventions, and architectural decisions.', tag: 'SMART', color: '#FF6B35' },
-    { icon: 'specialized', title: 'Sub-Agent Specialization', description: 'Deploy purpose-built agents with domain expertise: security auditors, UI experts, API integrators, test engineers.', tag: 'EXPERT', color: '#00F5D4' },
-    { icon: 'codegen', title: 'Code Generation', description: 'Generate, refactor, and review entire codebases. From single functions to complete application architectures.', tag: 'BUILD', color: '#7C3AED' },
-    { icon: 'tools', title: 'Tool Integration', description: 'Natively call bash, read files, search codebases, run tests, and interact with any API or external system.', tag: 'CONNECT', color: '#FF6B35' },
+  // ── /init terminal demo ──────────────────────────────────────────────────
+  readonly initLines = [
+    { type: 'prompt', text: '$ claude' },
+    { type: 'gap', text: '' },
+    { type: 'system', text: '✓  Reading project structure...' },
+    { type: 'warn',   text: '⚠  No CLAUDE.md found in project root' },
+    { type: 'info',   text: '?  Create CLAUDE.md with project context? [Y/n]' },
+    { type: 'input',  text: 'Y' },
+    { type: 'gap', text: '' },
+    { type: 'success', text: '✓  CLAUDE.md created' },
+    { type: 'success', text: '✓  Detected: Angular 20 · Tailwind CSS v4 · TypeScript' },
+    { type: 'success', text: '✓  Context loaded. Claude is ready.' },
+    { type: 'gap', text: '' },
+    { type: 'muted',  text: '  Type a task or /help for commands' },
+    { type: 'cursor', text: '> ' },
   ];
 
-  // ── MCP-powered power skills ──────────────────────────────────────────
-  readonly powerSkills = [
+  readonly claudeMdLines = [
+    { key: '# Architecture',    val: '' },
+    { key: '- Framework',       val: 'Angular 20 standalone · OnPush · Signals' },
+    { key: '- Styles',          val: 'Tailwind v4 via postcss.config.json' },
+    { key: '- State',           val: 'No NgRx — Signals only' },
+    { key: '',                   val: '' },
+    { key: '# Conventions',     val: '' },
+    { key: '- Components',      val: 'kebab-case filenames, standalone only' },
+    { key: '- Commits',         val: 'conventional commits (feat/fix/chore)' },
+    { key: '',                   val: '' },
+    { key: '# Known Issues',    val: '' },
+    { key: '- Zone.js',         val: 'conflicts with RxJS v8 — avoid subscribe()' },
+  ];
+
+  // ── Context & prompt engineering ─────────────────────────────────────────
+  readonly atMentions = [
+    { mention: '@src/app/auth.service.ts', desc: 'Reference a specific file', color: '#00F5D4' },
+    { mention: '@src/app/',               desc: 'Reference an entire directory', color: '#7C3AED' },
+    { mention: '@README.md',              desc: 'Provide project documentation', color: '#FF6B35' },
+    { mention: '@package.json',           desc: 'Share dependencies & scripts', color: '#00F5D4' },
+    { mention: '@CLAUDE.md',             desc: 'Load architecture conventions', color: '#7C3AED' },
+  ];
+
+  readonly promptWeak = {
+    text: 'Fix the auth bug',
+    issues: ['No file reference', 'No error description', 'No expected behavior', 'Claude must guess'],
+  };
+
+  readonly promptStrong = {
+    parts: [
+      { text: 'The login form in ', color: '#8888aa' },
+      { text: '@src/app/auth/login.component.ts', color: '#00F5D4' },
+      { text: ' throws ', color: '#8888aa' },
+      { text: "TypeError: Cannot read property 'token' of undefined", color: '#FF6B35' },
+      { text: ' when the email field is submitted empty.\n\n', color: '#8888aa' },
+      { text: 'Expected:', color: '#00F5D4' },
+      { text: ' show inline validation error.\n', color: '#8888aa' },
+      { text: 'Actual:', color: '#FF6B35' },
+      { text: ' app crashes.\n\nFix and add a unit test for the empty-email case.', color: '#8888aa' },
+    ],
+    highlights: ['@file reference', 'Exact error', 'Expected vs Actual', 'Asks for test'],
+  };
+
+  // ── Git workflow ──────────────────────────────────────────────────────────
+  readonly gitCycle = [
+    { phase: '01', title: 'Describe one task',         detail: 'One focused goal + @file references. No multi-step mega-prompts.', color: '#00F5D4' },
+    { phase: '02', title: 'Review every diff',          detail: 'Read the changes before accepting. Never auto-approve large batches.', color: '#7C3AED' },
+    { phase: '03', title: '/commit verified changes',   detail: 'One commit per logical unit. AI-generated conventional message from diff.', color: '#FF6B35' },
+    { phase: '04', title: '/clear between tasks',       detail: 'Free context tokens. Long sessions degrade quality exponentially.', color: '#00F5D4' },
+  ];
+
+  readonly gitTerminalLines = [
+    { type: 'prompt',  text: '> Review @src/app/auth.service.ts — add JWT refresh token auto-rotation' },
+    { type: 'think',   text: '⟳  Reading auth.service.ts (142 lines)...' },
+    { type: 'action',  text: '✎  src/app/auth.service.ts     +47 lines,  -3 lines' },
+    { type: 'action',  text: '✎  src/app/auth.interceptor.ts +12 lines' },
+    { type: 'info',    text: '↳  2 files changed · added refreshToken(), rotateKeys(), scheduleRotation()' },
+    { type: 'gap', text: '' },
+    { type: 'prompt',  text: '> /commit' },
+    { type: 'success', text: '✓  feat(auth): add JWT refresh token with auto-rotation' },
+    { type: 'muted',   text: '   2 files staged · 59 insertions · conventional commit generated' },
+    { type: 'gap', text: '' },
+    { type: 'prompt',  text: '> /clear' },
+    { type: 'warn',    text: '↻  Clearing context...' },
+    { type: 'success', text: '✓  Done. Freed 24,816 tokens. Starting fresh.' },
+    { type: 'cursor',  text: '> ' },
+  ];
+
+  // ── Token / context tips ──────────────────────────────────────────────────
+  readonly tokenTips = [
+    { title: '/clear between tasks',    desc: 'The single most impactful habit. Stale context causes drift and wasted tokens.', color: '#00F5D4', tag: 'CRITICAL' },
+    { title: 'Scope your @mentions',    desc: 'Only include files Claude needs. Flooding context with unrelated files dilutes focus.', color: '#7C3AED', tag: 'FOCUS' },
+    { title: 'Split large tasks',       desc: 'A 10-step feature = 10 single-step prompts. Each stays within optimal depth.', color: '#FF6B35', tag: 'SCOPE' },
+    { title: 'CLAUDE.md for stability', desc: 'Move stable context (architecture, conventions) into CLAUDE.md instead of repeating it.', color: '#00F5D4', tag: 'MEMORY' },
+  ];
+
+  // ── Skills marketplace ────────────────────────────────────────────────────
+  readonly officialSkillsRepo = 'https://github.com/anthropics/claude-code-skills';
+
+  readonly pluginsLines = [
+    { type: 'prompt', text: '> /plugins' },
+    { type: 'gap', text: '' },
+    { type: 'header', text: '  Installed plugins (9)' },
+    { type: 'plugin', name: 'frontend-design', category: 'UI/UX',        color: '#FF6B35' },
+    { type: 'plugin', name: 'code-review',     category: 'QUALITY',      color: '#7C3AED' },
+    { type: 'plugin', name: 'playwright',       category: 'TESTING',      color: '#00F5D4' },
+    { type: 'plugin', name: 'coderabbit',       category: 'CODE REVIEW',  color: '#FF6B35' },
+    { type: 'plugin', name: 'context7',         category: 'LIVE DOCS',    color: '#7C3AED' },
+    { type: 'plugin', name: 'sentry',           category: 'OBSERVABILITY',color: '#00F5D4' },
+    { type: 'gap', text: '' },
+    { type: 'info',   text: '  Install: /plugin-install <name>' },
+    { type: 'link',   text: '  Marketplace: github.com/anthropics/claude-code-skills' },
+    { type: 'cursor', text: '> ' },
+  ];
+
+  readonly marketplaceSkills = [
+    { name: 'frontend-design', cmd: '/frontend-design',  desc: 'Production-grade UI with distinctive aesthetics for React, Angular, Vue', category: 'UI/UX',         color: '#FF6B35' },
+    { name: 'code-review',     cmd: '/code-review',      desc: 'Deep review: bugs, security holes, performance regressions, style drift',  category: 'QUALITY',      color: '#7C3AED' },
+    { name: 'playwright',      cmd: '/playwright:test',  desc: 'Launch a real browser and run E2E test flows with DOM snapshots',          category: 'TESTING',      color: '#00F5D4' },
+    { name: 'coderabbit',      cmd: '/coderabbit:review',desc: 'Multi-pass AI review posted as inline PR comments with fix suggestions',   category: 'CODE REVIEW',  color: '#FF6B35' },
+    { name: 'context7',        cmd: '/context7:docs',    desc: 'Fetch version-pinned live docs for any library — no stale training data',  category: 'LIVE DOCS',    color: '#7C3AED' },
+    { name: 'sentry',          cmd: '/sentry:seer',      desc: 'Query Sentry issues in natural language and auto-generate fix PRs',        category: 'OBSERVABILITY',color: '#00F5D4' },
+  ];
+
+  // My own skills
+  readonly mySkills = [
+    { cmd: '/ship',            title: 'Ship',             desc: 'Git init + smart commit + GitHub repo + Vercel deploy in one command', color: '#00F5D4', category: 'DEPLOY'   },
+    { cmd: '/commit',          title: 'Smart Commit',     desc: 'Stages changes, generates conventional commit from diff, runs hooks',  color: '#7C3AED', category: 'GIT'     },
+    { cmd: '/review-pr',       title: 'PR Review',        desc: 'Fetches PR, analyzes all changed files for bugs, security, style',    color: '#FF6B35', category: 'GITHUB'  },
+    { cmd: '/frontend-design', title: 'UI Designer',      desc: 'Production-grade UI components with distinctive, non-generic aesthetics',color: '#FF6B35',category: 'UI/UX'  },
+    { cmd: '/simplify',        title: 'Simplifier',       desc: 'Detects over-engineering and rewrites lean without breaking tests',   color: '#7C3AED', category: 'REFACTOR'},
+    { cmd: '/claude-api',      title: 'Claude API Builder',desc: 'Scaffolds full Anthropic SDK integrations with streaming and tools', color: '#00F5D4', category: 'AI SDK'  },
+  ];
+
+  // ── Chrome extension ──────────────────────────────────────────────────────
+  readonly chromeUseCase = [
+    { step: '01', action: 'Open the failing page in Chrome',                tool: 'Browser',    color: '#00F5D4' },
+    { step: '02', action: 'chrome:automate reads console errors & network', tool: 'Chrome MCP', color: '#7C3AED' },
+    { step: '03', action: 'DOM snapshot + full-page screenshot captured',   tool: 'Chrome MCP', color: '#FF6B35' },
+    { step: '04', action: 'Claude correlates errors with @src files',       tool: 'Analysis',   color: '#00F5D4' },
+    { step: '05', action: 'Fix written and verified in the live browser',   tool: 'Playwright', color: '#7C3AED' },
+    { step: '06', action: '/commit — fix shipped to staging',               tool: 'Git',        color: '#FF6B35' },
+  ];
+
+  // ── Skill creation ────────────────────────────────────────────────────────
+  readonly skillBuildSteps = [
     {
-      cmd: 'coderabbit:review',
-      title: 'CodeRabbit AI Review',
-      description: 'Runs a deep, multi-pass AI review on your open PR. Detects logic bugs, security holes, performance regressions, and style drift — then posts precise inline comments with fix suggestions.',
-      color: '#FF6B35',
-      category: 'CODE REVIEW',
-      mcp: 'CodeRabbit MCP',
-      pipeline: ['fetch diff', 'multi-pass scan', 'rank issues', 'post inline comments'],
-      example: 'coderabbit:review → PR #142',
-      icon: 'rabbit',
-    },
-    {
-      cmd: 'playwright:test',
-      title: 'Playwright E2E',
-      description: 'Launches a real Chromium browser, navigates your app, and runs end-to-end test flows autonomously. Captures DOM snapshots, network logs, and screenshots on every assertion.',
+      n: '01', title: 'Create the folder',
+      detail: 'Each skill lives in its own directory inside .claude/skills/. The folder name becomes the default slash command.',
+      hint: '.claude/\n  skills/\n    ship/\n      SKILL.md    ← /ship\n    deploy-preview/\n      SKILL.md    ← /deploy-preview',
       color: '#00F5D4',
-      category: 'E2E TESTING',
-      mcp: 'Playwright MCP',
-      pipeline: ['launch browser', 'navigate', 'assert DOM', 'capture evidence'],
-      example: 'playwright:test → login flow ✓',
-      icon: 'playwright',
     },
     {
-      cmd: 'context7:docs',
-      title: 'Context7 Live Docs',
-      description: "Fetches authoritative, version-pinned documentation for any library in real time. No stale training data — always the exact API surface you're running today.",
-      color: '#7C3AED',
-      category: 'LIVE DOCS',
-      mcp: 'Context7 MCP',
-      pipeline: ['resolve lib-id', 'fetch latest', 'extract API', 'inject context'],
-      example: 'context7:docs → Angular 20 signals',
-      icon: 'docs',
-    },
-    {
-      cmd: 'chrome:automate',
-      title: 'Claude in Chrome',
-      description: 'Controls your live Chrome browser — clicks, fills forms, reads the DOM, captures screenshots, reads console logs and network requests — all from a single skill invocation.',
-      color: '#FF6B35',
-      category: 'BROWSER',
-      mcp: 'Chrome MCP',
-      pipeline: ['open tab', 'navigate', 'interact', 'extract & report'],
-      example: 'chrome:automate → scrape + screenshot',
-      icon: 'chrome',
-    },
-  ];
-
-  // ── Built-in skills ───────────────────────────────────────────────────
-  readonly skills = [
-    { cmd: '/commit', title: 'Smart Commit', description: 'Stages changes, generates a conventional commit message from the diff, runs pre-commit hooks, and creates the commit.', color: '#00F5D4', category: 'GIT', steps: ['git diff', 'write message', 'run hooks', 'commit'] },
-    { cmd: '/review-pr', title: 'PR Review', description: 'Fetches the pull request, analyzes all changed files for bugs, security issues, and style, then posts structured review comments.', color: '#7C3AED', category: 'GITHUB', steps: ['fetch PR', 'analyze diff', 'check security', 'post review'] },
-    { cmd: '/frontend-design', title: 'Frontend Designer', description: 'Creates production-grade UI components with distinctive aesthetics — avoiding generic AI looks. Supports React, Angular, and Vue.', color: '#FF6B35', category: 'UI/UX', steps: ['parse spec', 'design system', 'generate code', 'polish'] },
-    { cmd: '/claude-api', title: 'Claude API Builder', description: 'Scaffolds full Anthropic SDK integrations: streaming responses, tool use, vision inputs, and multi-turn conversations.', color: '#00F5D4', category: 'AI SDK', steps: ['pick model', 'wire tools', 'stream output', 'handle errors'] },
-    { cmd: '/sentry:seer', title: 'Sentry AI Seer', description: 'Queries Sentry with natural language, triages live issues by impact, traces stack frames to source, and auto-generates fix PRs.', color: '#7C3AED', category: 'OBSERVABILITY', steps: ['nl query', 'triage', 'trace source', 'draft fix'] },
-    { cmd: '/simplify', title: 'Code Simplifier', description: 'Reviews recently changed code for over-engineering, dead abstractions, and redundancy — then rewrites it leaner without breaking tests.', color: '#FF6B35', category: 'REFACTOR', steps: ['scan changes', 'detect bloat', 'rewrite lean', 'verify tests'] },
-    { cmd: '/ship', title: 'Ship to Production', description: 'Initializes a git repo, generates a conventional commit message from the diff, creates a GitHub repository, and deploys the app to Vercel — all in one command.', color: '#00F5D4', category: 'DEPLOY', steps: ['git init', 'smart commit', 'gh repo create', 'vercel --prod'] },
-  ];
-
-  // ── Skill creation steps ──────────────────────────────────────────────
-  readonly creationSteps = [
-    {
-      n: '01',
-      title: 'Design the interface',
-      detail: 'Before writing anything, define what your skill accepts and produces. Think of it as a CLI command with a contract.',
-      hint: 'Input: a PR number or branch name\nOutput: structured review comment\nTools needed: gh, read files',
-      color: '#00F5D4',
-    },
-    {
-      n: '02',
-      title: 'Create the file',
-      detail: 'Skills live in .claude/skills/ at your project root. The filename becomes the default trigger slug.',
-      hint: '.claude/\n  skills/\n    deploy-preview/\n      SKILL.md        ← /deploy-preview\n    db-seed/\n      SKILL.md        ← /db-seed',
+      n: '02', title: 'Write YAML frontmatter',
+      detail: 'Two fields are all you need: name and description. The rest is optional (model, tools allowlist).',
+      hint: '---\nname: ship\ndescription: "Init, commit,\n  GitHub & Vercel deploy"\nmodel: sonnet\n---',
       color: '#7C3AED',
     },
     {
-      n: '03',
-      title: 'Write YAML frontmatter',
-      detail: 'The frontmatter block configures the skill metadata. Every field is optional except name.',
-      hint: '---\nname: deploy-preview\ndescription: "Build & deploy preview"\ntrigger: /deploy-preview\nmodel: sonnet\n---',
+      n: '03', title: 'Write the prompt body',
+      detail: 'Full agent instructions: numbered steps, tools to use, error handling, and expected output format.',
+      hint: '# Ship Skill\n\nYou are a deployment agent.\nWhen invoked, in order:\n1. git init if no repo exists\n2. Stage files & commit\n3. gh repo create --push\n4. vercel --prod --yes',
       color: '#FF6B35',
     },
     {
-      n: '04',
-      title: 'Write the prompt body',
-      detail: 'The body is the full agent instruction set. Be explicit about steps, output format, error handling, and tools to use.',
-      hint: '## Goal\nDeploy a Vercel preview for the\ncurrent branch.\n\n## Steps\n1. Run `npm run build`\n2. Fix any TS errors\n3. Run `vercel --prod=false`\n4. Return the preview URL',
+      n: '04', title: 'Test with edge cases',
+      detail: 'Run the skill with empty input, bad state, missing files. Iterate the prompt until behaviour is deterministic.',
+      hint: '/ship\n/ship --prod\n/ship --private --prod\n/ship --no-github\n/ship --no-vercel',
       color: '#00F5D4',
     },
-    {
-      n: '05',
-      title: 'Test & iterate',
-      detail: 'Run the skill with edge cases: empty input, errors, large files. Refine the prompt until behaviour is deterministic.',
-      hint: '$ /deploy-preview          # basic\n$ /deploy-preview --dry-run  # dry run\n$ /deploy-preview branch=fix  # param',
-      color: '#7C3AED',
-    },
   ];
 
-  // ── Frontmatter reference ─────────────────────────────────────────────
-  readonly frontmatterFields = [
-    { field: 'name', type: 'string', required: true,  desc: 'Unique identifier used as the slash command slug' },
-    { field: 'description', type: 'string', required: false, desc: 'Short summary shown in /help listings' },
-    { field: 'trigger', type: 'string', required: false, desc: 'Custom slash command override (default: /name)' },
-    { field: 'model', type: 'enum',   required: false, desc: 'sonnet (default) | opus | haiku' },
-    { field: 'memory', type: 'enum',   required: false, desc: 'project | user — which memory scope to load' },
-    { field: 'tools', type: 'array',  required: false, desc: 'Allowlist of tools: bash, read, write, grep…' },
-    { field: 'color', type: 'string', required: false, desc: 'Hex or named color for the skill card in UI' },
+  // ── Agents ────────────────────────────────────────────────────────────────
+  readonly agentTypes = [
+    { role: 'Orchestrator', desc: 'Top-level agent. Decomposes goals, assigns work to sub-agents, and synthesizes their outputs into one result.', color: '#00F5D4', tag: 'CORE' },
+    { role: 'Specialist',   desc: 'Domain-expert sub-agent with focused tools: security auditor, UI generator, API integrator, test writer.', color: '#7C3AED', tag: 'EXPERT' },
+    { role: 'Validator',    desc: 'Reviews and verifies all sub-agent outputs before they are merged, committed, or deployed.', color: '#FF6B35', tag: 'SAFETY' },
   ];
 
-  // ── Best practices ────────────────────────────────────────────────────
-  readonly bestPractices = [
-    { type: 'do',   title: 'Single responsibility',       desc: 'Each skill does exactly one thing. Compose complex flows from multiple skills rather than bloating one.' },
-    { type: 'do',   title: 'Explicit output format',      desc: 'Always specify what the skill should return — plain text, JSON, a file path, a PR comment.' },
-    { type: 'do',   title: 'Define error behaviour',      desc: 'Tell the skill what to do on failure: retry, abort, or return a structured error object.' },
-    { type: 'do',   title: 'Right model for the task',    desc: 'Use haiku for fast transforms, sonnet for most coding, opus only for complex multi-step reasoning.' },
-    { type: 'dont', title: 'Avoid vague instructions',    desc: 'Never write "do a good job". Specify exact steps, conditions, and acceptance criteria.' },
-    { type: 'dont', title: "Don't skip tool allowlists",  desc: 'Constrain the tools array to only what the skill needs — prevents unintended side effects.' },
-    { type: 'dont', title: "Don't ignore edge cases",     desc: 'Test empty input, malformed data, missing files. Add explicit handling in the prompt body.' },
-    { type: 'dont', title: 'Never hardcode secrets',      desc: 'Use environment variables accessed via bash. Never embed API keys or tokens in the skill file.' },
+  readonly agentResources = [
+    { title: 'Agent Architecture',  url: 'https://docs.anthropic.com/en/docs/claude-code', color: '#00F5D4' },
+    { title: 'Sub-agent Patterns',  url: 'https://docs.anthropic.com/en/docs/claude-code', color: '#7C3AED' },
+    { title: 'Persistent Memory',   url: 'https://docs.anthropic.com/en/docs/claude-code', color: '#FF6B35' },
+    { title: 'Hooks & Automation',  url: 'https://docs.anthropic.com/en/docs/claude-code', color: '#00F5D4' },
   ];
 
-  readonly useCases = [
-    { number: '01', title: 'Full-Stack Feature Development', description: 'Orchestrator agent receives a feature request, spawns a backend agent to write the API, a frontend agent for the UI, and a test agent for coverage — all running in parallel.', steps: ['Analyze requirements', 'Spawn specialized agents', 'Merge outputs', 'Run tests'], accent: '#00F5D4' },
-    { number: '02', title: 'Codebase-Wide Refactoring', description: 'An agent maps the entire dependency graph, identifies breaking change patterns, then orchestrates safe refactoring across hundreds of files simultaneously.', steps: ['Map dependencies', 'Plan changes', 'Parallel edits', 'Validate integrity'], accent: '#7C3AED' },
-    { number: '03', title: 'Automated Security Audit', description: 'Specialized security agent scans code for OWASP vulnerabilities, generates a detailed report, and a remediation agent patches every finding with proper validation.', steps: ['Scan codebase', 'Identify vectors', 'Generate report', 'Apply patches'], accent: '#FF6B35' },
+  // ── Good practices ────────────────────────────────────────────────────────
+  readonly goodPractices = [
+    { n: '01', title: 'One task at a time',    desc: 'Break work into small, verifiable units. Never ask Claude to build an entire app in one prompt.', color: '#00F5D4', tag: 'SCOPE'  },
+    { n: '02', title: 'Always @mention files', desc: 'Reference relevant files explicitly. Never assume Claude knows which file you mean.',             color: '#7C3AED', tag: 'CONTEXT'},
+    { n: '03', title: 'Commit early & often',  desc: 'One commit per logical change. Use /commit for AI-generated conventional messages.',              color: '#FF6B35', tag: 'GIT'    },
+    { n: '04', title: '/clear between tasks',  desc: 'Fresh context = sharper focus. Long sessions degrade quality exponentially.',                     color: '#00F5D4', tag: 'TOKENS' },
+    { n: '05', title: 'Maintain CLAUDE.md',    desc: 'Document architecture decisions here. Agents load this first every session.',                     color: '#7C3AED', tag: 'MEMORY' },
+    { n: '06', title: 'Review before accept',  desc: 'Always read the diff. Claude is powerful but fallible. You own every line of code.',             color: '#FF6B35', tag: 'SAFETY' },
   ];
 
-  readonly stats = [
-    { value: '10x', label: 'Faster than sequential', sub: 'via parallel agents' },
-    { value: '∞', label: 'Context depth', sub: 'via persistent memory' },
-    { value: '100%', label: 'Tool native', sub: 'bash, files, APIs' },
-    { value: 'Zero', label: 'Human bottlenecks', sub: 'on routine tasks' },
+  // ── Bad practices ─────────────────────────────────────────────────────────
+  readonly badPractices = [
+    { severity: 'CRITICAL', title: 'Vague mega-prompts',       example: '"Build me a full SaaS app"',                    impact: 'Unfocused output, impossible to verify, guaranteed token waste',             color: '#FF6B35' },
+    { severity: 'HIGH',     title: 'No file context',           example: '"Fix the auth bug"',                            impact: 'Wrong file targeted, regressions introduced, 3× token waste',               color: '#FF6B35' },
+    { severity: 'HIGH',     title: 'Never clearing context',    example: 'Hours-long session, no /clear',                 impact: 'Context poisoning, degraded responses, token budget exhausted mid-task',    color: '#7C3AED' },
+    { severity: 'HIGH',     title: 'Auto-accepting all changes',example: 'Approve without reading diffs',                 impact: 'Unreviewed code in production, silent regressions, security vulnerabilities', color: '#7C3AED' },
+    { severity: 'MEDIUM',   title: 'Repeating context every prompt', example: '"As I mentioned, we use Angular..."',      impact: 'Token waste + confusion — put stable context in CLAUDE.md instead',          color: '#00F5D4' },
+    { severity: 'MEDIUM',   title: 'Committing generated code blindly', example: '"Just commit everything Claude wrote"', impact: 'No ownership of the codebase, silent bugs, loss of code review culture',   color: '#00F5D4' },
   ];
 
   ngAfterViewInit(): void {
@@ -208,5 +268,17 @@ export class App implements AfterViewInit, OnDestroy {
 
   setTab(i: number): void {
     this.activeCreationTab.set(i);
+  }
+
+  severityColor(s: string): string {
+    if (s === 'CRITICAL') return '#FF6B35';
+    if (s === 'HIGH') return '#f59e0b';
+    return '#8888aa';
+  }
+
+  severityBg(s: string): string {
+    if (s === 'CRITICAL') return 'rgba(255,107,53,0.1)';
+    if (s === 'HIGH') return 'rgba(245,158,11,0.1)';
+    return 'rgba(136,136,170,0.08)';
   }
 }

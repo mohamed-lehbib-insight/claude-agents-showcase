@@ -1,827 +1,959 @@
-<div class="min-h-screen" style="background:#050508; color:#f0f0ff; font-family:'Syne',sans-serif;">
+<div class="min-h-screen" style="background:#050508;color:#f0f0ff;font-family:'Syne',sans-serif;">
 
-  <!-- ══════════════════════════════════════════════════ NAV ═══ -->
-  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-4"
-       style="background:linear-gradient(to bottom,rgba(5,5,8,0.96) 0%,transparent 100%);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,0.04);">
+  <!-- ══════════════════════════════════════════ NAV ═══ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-3"
+       style="background:rgba(5,5,8,0.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.05);">
+
+    <!-- Left: Claude logo + brand -->
     <div class="flex items-center gap-3">
+      <!-- Claude / Anthropic "A" mark -->
       <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
            style="background:linear-gradient(135deg,#00F5D4,#7C3AED);">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="3" fill="white"/>
-          <path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-          <circle cx="5.5" cy="5.5" r="1.5" fill="white" opacity="0.6"/>
-          <circle cx="18.5" cy="5.5" r="1.5" fill="white" opacity="0.6"/>
-          <circle cx="5.5" cy="18.5" r="1.5" fill="white" opacity="0.6"/>
-          <circle cx="18.5" cy="18.5" r="1.5" fill="white" opacity="0.6"/>
+        <svg width="14" height="14" viewBox="0 0 100 100" fill="none">
+          <path d="M57 12H43L8 88h17l6-16h38l6 16h17L57 12zm-7 13 13 35H37l13-35z" fill="white"/>
         </svg>
       </div>
-      <span style="font-family:'Syne Mono',monospace;font-size:0.85rem;color:#f0f0ff;letter-spacing:0.04em;">
-        claude<span style="color:#00F5D4;">_</span>agents
+      <span style="font-family:'Syne Mono',monospace;font-size:0.82rem;color:#f0f0ff;letter-spacing:0.04em;">
+        claude<span style="color:#00F5D4;">_</span>code
       </span>
+
+      <!-- Divider -->
+      <div class="hidden md:block w-px h-4 mx-1" style="background:#1e1e38;"></div>
+
+      <!-- InsightEx logo -->
+      <a href="https://insight-ex.com" target="_blank" rel="noopener"
+         class="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-md transition-all duration-200 hover:opacity-80"
+         style="background:rgba(0,245,212,0.06);border:1px solid rgba(0,245,212,0.15);">
+        <div class="w-3.5 h-3.5 rounded-sm flex items-center justify-center" style="background:#00F5D4;">
+          <span style="font-family:'Syne Mono',monospace;font-size:0.5rem;color:#050508;font-weight:900;">IX</span>
+        </div>
+        <span style="font-family:'Syne Mono',monospace;font-size:0.68rem;color:#00F5D4;letter-spacing:0.06em;">InsightEx</span>
+      </a>
+
+      <!-- GTI logo -->
+      <a href="https://gti-intl.com" target="_blank" rel="noopener"
+         class="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-md transition-all duration-200 hover:opacity-80"
+         style="background:rgba(124,58,237,0.06);border:1px solid rgba(124,58,237,0.15);">
+        <div class="w-3.5 h-3.5 rounded-sm flex items-center justify-center" style="background:#7C3AED;">
+          <span style="font-family:'Syne Mono',monospace;font-size:0.5rem;color:white;font-weight:900;">G</span>
+        </div>
+        <span style="font-family:'Syne Mono',monospace;font-size:0.68rem;color:#9d5ff0;letter-spacing:0.06em;">GTI Intl</span>
+      </a>
     </div>
-    <div class="hidden md:flex items-center gap-8">
-      <button class="nav-link" (click)="scrollTo('capabilities')">capabilities</button>
+
+    <!-- Center nav links -->
+    <div class="hidden lg:flex items-center gap-6">
+      <button class="nav-link" (click)="scrollTo('init')">init</button>
+      <button class="nav-link" (click)="scrollTo('context')">context</button>
+      <button class="nav-link" (click)="scrollTo('git')">git</button>
       <button class="nav-link" (click)="scrollTo('skills')">skills</button>
-      <button class="nav-link" (click)="scrollTo('workflow')">workflow</button>
-      <button class="nav-link" (click)="scrollTo('use-cases')">use cases</button>
-      <button class="nav-link" (click)="scrollTo('cta')">get started</button>
+      <button class="nav-link" (click)="scrollTo('chrome')">chrome</button>
+      <button class="nav-link" (click)="scrollTo('agents')">agents</button>
+      <button class="nav-link" (click)="scrollTo('practices')">practices</button>
     </div>
+
+    <!-- Right: live badge -->
     <div class="flex items-center gap-2">
-      <div class="w-2 h-2 rounded-full" style="background:#39FF14;animation:dataPulse 2s ease-in-out infinite;"></div>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#39FF14;letter-spacing:0.1em;">LIVE</span>
+      <div class="w-1.5 h-1.5 rounded-full" style="background:#39FF14;animation:dataPulse 2s ease-in-out infinite;"></div>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#39FF14;letter-spacing:0.1em;">LIVE</span>
     </div>
   </nav>
 
-  <!-- ══════════════════════════════════════════════════ HERO ═══ -->
+  <!-- ══════════════════════════════════════════ HERO ═══ -->
   <section class="relative flex flex-col items-center justify-center text-center px-6 grid-bg overflow-hidden"
            style="min-height:100svh;padding-top:80px;padding-bottom:40px;">
 
-    <!-- Ambient orbs -->
     <div class="absolute inset-0 pointer-events-none overflow-hidden">
-      <div class="absolute rounded-full float-anim" style="width:600px;height:600px;top:-220px;left:-180px;background:radial-gradient(circle,rgba(124,58,237,0.13) 0%,transparent 70%);"></div>
-      <div class="absolute rounded-full float-anim-2" style="width:500px;height:500px;bottom:-100px;right:-120px;background:radial-gradient(circle,rgba(0,245,212,0.1) 0%,transparent 70%);"></div>
+      <div class="absolute rounded-full float-anim"  style="width:600px;height:600px;top:-200px;left:-180px;background:radial-gradient(circle,rgba(124,58,237,0.12) 0%,transparent 70%);"></div>
+      <div class="absolute rounded-full float-anim-2" style="width:500px;height:500px;bottom:-80px;right:-120px;background:radial-gradient(circle,rgba(0,245,212,0.09) 0%,transparent 70%);"></div>
     </div>
 
-    <!-- Particles -->
-    <div class="absolute inset-0 pointer-events-none">
-      @for (p of [1,2,3,4,5,6,7]; track p) {
-        <div class="absolute w-1 h-1 rounded-full"
-             [style.left.%]="p * 13 + 4"
-             [style.top.%]="p * 11 + 8"
-             [style.background]="p % 3 === 0 ? '#7C3AED' : p % 2 === 0 ? '#FF6B35' : '#00F5D4'"
-             [style.opacity]="0.35"
-             [style.animation]="'particleFloat ' + (5 + p) + 's ease-in-out ' + p * 0.8 + 's infinite'">
-        </div>
-      }
-    </div>
-
-    <div class="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center">
-
-      <!-- Eyebrow -->
+    <div class="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center">
       <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 section-reveal"
            style="background:rgba(0,245,212,0.07);border:1px solid rgba(0,245,212,0.22);">
         <div class="w-1.5 h-1.5 rounded-full" style="background:#00F5D4;animation:dataPulse 1.5s ease-in-out infinite;"></div>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#00F5D4;letter-spacing:0.12em;">CLAUDE CODE · AGENT PLATFORM</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#00F5D4;letter-spacing:0.12em;">CLAUDE CODE · MASTERY GUIDE</span>
       </div>
 
-      <!-- Headline -->
       <h1 class="mb-5 section-reveal delay-100"
-          style="font-size:clamp(3rem,8vw,6.5rem);font-weight:800;line-height:1.04;letter-spacing:-0.03em;">
-        <span style="color:#f0f0ff;">Agents that</span><br>
-        <span class="gradient-text">think, act,</span><br>
-        <span style="color:#f0f0ff;">and </span><span class="glow-text-cyan" style="color:#00F5D4;">remember.</span>
+          style="font-size:clamp(2.8rem,7vw,5.5rem);font-weight:800;line-height:1.05;letter-spacing:-0.03em;">
+        <span style="color:#f0f0ff;">The definitive</span><br>
+        <span class="gradient-text">Claude Code</span><br>
+        <span style="color:#f0f0ff;">playbook.</span>
       </h1>
 
-      <!-- Typewriter -->
       <div class="flex items-center justify-center gap-2 mb-7 section-reveal delay-200">
-        <span style="font-family:'JetBrains Mono',monospace;font-size:1rem;color:#8888aa;">Built for</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:0.95rem;color:#8888aa;">Master</span>
         <span class="terminal-cursor"
-              style="font-family:'JetBrains Mono',monospace;font-size:1rem;color:#00F5D4;min-width:210px;text-align:left;display:inline-block;">
+              style="font-family:'JetBrains Mono',monospace;font-size:0.95rem;color:#00F5D4;min-width:220px;text-align:left;display:inline-block;">
           {{ typedText() }}
         </span>
       </div>
 
       <p class="mb-10 section-reveal delay-300"
-         style="max-width:560px;color:#8888aa;line-height:1.75;font-size:1.05rem;">
-        Claude Code agents autonomously execute complex engineering tasks, orchestrate parallel workflows, and accumulate deep institutional knowledge — transforming how software gets built.
+         style="max-width:520px;color:#8888aa;line-height:1.8;font-size:1rem;">
+        From your first <code style="color:#00F5D4;background:rgba(0,245,212,0.08);padding:1px 6px;border-radius:4px;">/init</code>
+        to production multi-agent workflows — every practice, pattern, and skill you need to build faster and better with Claude Code.
       </p>
 
-      <!-- CTAs -->
-      <div class="flex flex-col sm:flex-row items-center gap-4 mb-14 section-reveal delay-400">
-        <button class="shimmer-btn px-8 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105"
-                style="background:linear-gradient(135deg,#00F5D4,#00b89e);color:#050508;font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;letter-spacing:0.02em;box-shadow:0 0 30px rgba(0,245,212,0.28);"
-                (click)="scrollTo('capabilities')">
-          Explore Capabilities
+      <div class="flex flex-col sm:flex-row items-center gap-4 section-reveal delay-400">
+        <button class="shimmer-btn px-8 py-3.5 rounded-xl font-bold transition-all duration-300 hover:scale-105"
+                style="background:linear-gradient(135deg,#00F5D4,#00b89e);color:#050508;font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;box-shadow:0 0 30px rgba(0,245,212,0.25);"
+                (click)="scrollTo('init')">
+          Start from /init →
         </button>
-        <button class="px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105"
+        <button class="px-8 py-3.5 rounded-xl font-semibold transition-all duration-300 hover:scale-105"
                 style="background:rgba(255,255,255,0.04);border:1px solid #1e1e38;color:#f0f0ff;font-family:'Syne',sans-serif;"
-                (click)="scrollTo('workflow')">
-          See Workflow →
+                (click)="scrollTo('skills')">
+          Jump to Skills
         </button>
       </div>
-
-      <!-- Stats -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 w-full section-reveal delay-500">
-        @for (stat of stats; track stat.label) {
-          <div class="rounded-xl p-4 text-center" style="background:rgba(255,255,255,0.03);border:1px solid #1e1e38;">
-            <div style="font-size:1.9rem;font-weight:800;color:#00F5D4;line-height:1;">{{ stat.value }}</div>
-            <div style="font-size:0.78rem;color:#f0f0ff;font-weight:600;margin-top:4px;">{{ stat.label }}</div>
-            <div style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:#4a4a6a;margin-top:2px;">{{ stat.sub }}</div>
-          </div>
-        }
-      </div>
-    </div>
-
-    <!-- Scroll cue — sits below stats, no overlap -->
-    <div class="flex flex-col items-center gap-2 mt-10 section-reveal delay-600">
-      <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:#4a4a6a;letter-spacing:0.2em;">SCROLL</span>
-      <div class="w-px h-10" style="background:linear-gradient(to bottom,#1e1e38,transparent);"></div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════ CAPABILITIES ═══ -->
-  <section id="capabilities" class="py-28 px-6">
-    <div class="max-w-6xl mx-auto">
+  <!-- ══════════════════════════════════════════ /INIT ═══ -->
+  <section id="init" class="py-28 px-6 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute rounded-full" style="width:600px;height:600px;top:50%;left:20%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(0,245,212,0.05) 0%,transparent 65%);"></div>
+    </div>
+    <div class="max-w-6xl mx-auto relative z-10">
+
+      <div class="text-center mb-16 section-reveal">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5"
+             style="background:rgba(0,245,212,0.08);border:1px solid rgba(0,245,212,0.2);">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#00F5D4;letter-spacing:0.12em;">STEP 0 — GETTING STARTED</span>
+        </div>
+        <h2 style="font-size:clamp(2rem,4vw,2.8rem);font-weight:800;color:#f0f0ff;letter-spacing:-0.02em;">
+          Always start with <code style="color:#00F5D4;background:rgba(0,245,212,0.08);padding:2px 10px;border-radius:6px;font-size:0.9em;">/init</code>
+        </h2>
+        <p class="mt-4" style="color:#8888aa;font-size:1rem;line-height:1.7;max-width:500px;margin-left:auto;margin-right:auto;">
+          The first thing Claude does is look for <code style="color:#00F5D4;">CLAUDE.md</code> at your project root. This file is the shared contract between you and every agent in your workflow.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+
+        <!-- Terminal: /init demo -->
+        <div class="section-reveal rounded-2xl overflow-hidden" style="background:#070710;border:1px solid #1e1e38;">
+          <div class="flex items-center gap-2 px-5 py-3" style="background:#0d0d1c;border-bottom:1px solid #1e1e38;">
+            <div class="w-3 h-3 rounded-full" style="background:#FF5F57;"></div>
+            <div class="w-3 h-3 rounded-full" style="background:#FEBC2E;"></div>
+            <div class="w-3 h-3 rounded-full" style="background:#28C840;"></div>
+            <span class="mx-auto" style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#4a4a6a;">claude-code — init session</span>
+          </div>
+          <div class="p-6" style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;line-height:2;">
+            @for (line of initLines; track $index) {
+              @if (line.type === 'gap') { <br> }
+              @if (line.type === 'prompt')  { <div style="color:#00F5D4;">{{ line.text }}</div> }
+              @if (line.type === 'system')  { <div style="color:#8888aa;padding-left:14px;">{{ line.text }}</div> }
+              @if (line.type === 'warn')    { <div style="color:#f59e0b;padding-left:14px;">{{ line.text }}</div> }
+              @if (line.type === 'info')    { <div style="color:#9d5ff0;padding-left:14px;">{{ line.text }}</div> }
+              @if (line.type === 'input')   { <div style="color:#f0f0ff;padding-left:14px;">{{ line.text }}</div> }
+              @if (line.type === 'success') { <div style="color:#39FF14;padding-left:14px;">{{ line.text }}</div> }
+              @if (line.type === 'muted')   { <div style="color:#4a4a6a;">{{ line.text }}</div> }
+              @if (line.type === 'cursor')  {
+                <span style="color:#00F5D4;">{{ line.text }}</span>
+                <span class="terminal-cursor" style="color:#00F5D4;"></span>
+              }
+            }
+          </div>
+        </div>
+
+        <!-- Right: CLAUDE.md preview + explanation -->
+        <div class="flex flex-col gap-5 section-reveal delay-200">
+
+          <!-- CLAUDE.md file -->
+          <div class="rounded-2xl overflow-hidden" style="background:#070710;border:1px solid rgba(0,245,212,0.18);">
+            <div class="flex items-center gap-2 px-4 py-3" style="background:#0d0d1c;border-bottom:1px solid #1e1e38;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#00F5D4" stroke-width="2">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
+              </svg>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#00F5D4;">CLAUDE.md</span>
+              <span class="ml-auto" style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:#2a2a4a;">project root</span>
+            </div>
+            <div class="p-5" style="font-family:'JetBrains Mono',monospace;font-size:0.74rem;line-height:1.9;">
+              @for (line of claudeMdLines; track $index) {
+                @if (line.key === '') { <br> }
+                @else if (line.val === '') {
+                  <div style="color:#9d5ff0;">{{ line.key }}</div>
+                } @else {
+                  <div><span style="color:#4a4a6a;">{{ line.key }}: </span><span style="color:#8888aa;">{{ line.val }}</span></div>
+                }
+              }
+              <span class="terminal-cursor" style="color:#9d5ff0;"></span>
+            </div>
+          </div>
+
+          <!-- What to put in CLAUDE.md -->
+          <div class="rounded-2xl p-6" style="background:rgba(0,245,212,0.04);border:1px solid rgba(0,245,212,0.14);">
+            <h3 style="font-size:0.95rem;font-weight:700;color:#f0f0ff;margin-bottom:12px;">What belongs in CLAUDE.md</h3>
+            <div class="space-y-2.5">
+              @for (item of [
+                { label:'Architecture decisions', hint:'framework, state management, patterns' },
+                { label:'Coding conventions',     hint:'naming, file structure, commit format' },
+                { label:'Tech stack details',     hint:'versions, config quirks, known issues' },
+                { label:'Do NOT repeat per-session', hint:'put stable context here, not in prompts' }
+              ]; track item.label) {
+                <div class="flex items-start gap-3">
+                  <div class="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style="background:#00F5D4;"></div>
+                  <div>
+                    <span style="font-size:0.84rem;color:#f0f0ff;font-weight:600;">{{ item.label }}</span>
+                    <span style="font-size:0.78rem;color:#4a4a6a;margin-left:6px;font-family:'JetBrains Mono',monospace;">{{ item.hint }}</span>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ CONTEXT ENGINEERING ═══ -->
+  <section id="context" class="py-28 px-6 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute rounded-full" style="width:700px;height:700px;top:50%;right:-10%;transform:translateY(-50%);background:radial-gradient(circle,rgba(124,58,237,0.06) 0%,transparent 65%);"></div>
+    </div>
+    <div class="max-w-6xl mx-auto relative z-10">
 
       <div class="text-center mb-16 section-reveal">
         <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5"
              style="background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.25);">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#9d5ff0;letter-spacing:0.12em;">CORE CAPABILITIES</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#9d5ff0;letter-spacing:0.12em;">CONTEXT & PROMPT ENGINEERING</span>
         </div>
-        <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;color:#f0f0ff;letter-spacing:-0.02em;">
-          What agents can do
+        <h2 style="font-size:clamp(2rem,4vw,2.8rem);font-weight:800;color:#f0f0ff;letter-spacing:-0.02em;">
+          The art of the <span class="gradient-text">perfect prompt</span>
         </h2>
-        <p class="mt-4" style="color:#8888aa;font-size:1rem;line-height:1.7;max-width:480px;margin-left:auto;margin-right:auto;">
-          Each capability amplifies the others, creating an autonomous engineering partner that compounds in value over time.
+        <p class="mt-4" style="color:#8888aa;font-size:1rem;line-height:1.7;max-width:500px;margin-left:auto;margin-right:auto;">
+          The quality of Claude's output is directly proportional to the quality of your context. Use <code style="color:#9d5ff0;">@</code> mentions, be explicit, and always compare expected vs actual behavior.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        @for (cap of capabilities; track cap.title; let i = $index) {
-          <div class="card-glow rounded-2xl p-6 section-reveal" [class]="'delay-' + ((i % 3 + 1) * 100)"
-               style="background:rgba(255,255,255,0.025);">
-            <div class="w-11 h-11 rounded-xl mb-4 flex items-center justify-center"
-                 [style.background]="'rgba(' + colorToRgb(cap.color) + ',0.12)'">
-              @if (cap.icon === 'autonomous') {
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" [attr.stroke]="cap.color" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
-                </svg>
-              }
-              @if (cap.icon === 'parallel') {
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" [attr.stroke]="cap.color" stroke-width="1.8" stroke-linecap="round">
-                  <rect x="2" y="3" width="6" height="5" rx="1"/><rect x="2" y="11" width="6" height="5" rx="1"/>
-                  <rect x="16" y="7" width="6" height="10" rx="1"/>
-                  <path d="M8 5.5h4l4 1.5M8 13.5h4l4-1"/>
-                </svg>
-              }
-              @if (cap.icon === 'memory') {
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" [attr.stroke]="cap.color" stroke-width="1.8" stroke-linecap="round">
-                  <ellipse cx="12" cy="5" rx="9" ry="3"/>
-                  <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
-                  <path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/>
-                </svg>
-              }
-              @if (cap.icon === 'specialized') {
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" [attr.stroke]="cap.color" stroke-width="1.8" stroke-linecap="round">
-                  <circle cx="12" cy="8" r="4"/><path d="M12 14v6"/>
-                  <circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/>
-                  <path d="M6 8.5v3.5M18 8.5v3.5"/>
-                </svg>
-              }
-              @if (cap.icon === 'codegen') {
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" [attr.stroke]="cap.color" stroke-width="1.8" stroke-linecap="round">
-                  <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
-                  <line x1="12" y1="2" x2="12" y2="22"/>
-                </svg>
-              }
-              @if (cap.icon === 'tools') {
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" [attr.stroke]="cap.color" stroke-width="1.8" stroke-linecap="round">
-                  <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
-                </svg>
-              }
-            </div>
-            <div class="inline-flex items-center px-2 py-0.5 rounded mb-3"
-                 [style.background]="'rgba(' + colorToRgb(cap.color) + ',0.1)'">
-              <span style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.12em;" [style.color]="cap.color">{{ cap.tag }}</span>
-            </div>
-            <h3 style="font-size:1.05rem;font-weight:700;color:#f0f0ff;margin-bottom:8px;">{{ cap.title }}</h3>
-            <p style="font-size:0.86rem;line-height:1.65;color:#8888aa;">{{ cap.description }}</p>
-          </div>
-        }
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════════════ SKILLS ═══ -->
-  <section id="skills" class="py-28 px-6 relative overflow-hidden">
-    <div class="absolute inset-0 pointer-events-none">
-      <div class="absolute rounded-full" style="width:700px;height:700px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,107,53,0.06) 0%,transparent 65%);"></div>
-    </div>
-
-    <div class="max-w-6xl mx-auto relative z-10">
-
-      <!-- Header -->
-      <div class="text-center mb-16 section-reveal">
-        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5"
-             style="background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.28);">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#FF6B35;letter-spacing:0.12em;">SLASH COMMANDS</span>
+      <!-- @mention examples -->
+      <div class="mb-14 section-reveal">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6"
+             style="background:rgba(0,245,212,0.07);border:1px solid rgba(0,245,212,0.18);">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#00F5D4;letter-spacing:0.1em;">@ MENTIONS — HOW TO GIVE CONTEXT</span>
         </div>
-        <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;color:#f0f0ff;letter-spacing:-0.02em;">
-          Skills — reusable agent programs
-        </h2>
-        <p class="mt-4" style="color:#8888aa;font-size:1rem;line-height:1.7;max-width:520px;margin-left:auto;margin-right:auto;">
-          Skills are composable prompt programs invoked with a slash command. Ship with battle-tested built-ins or author your own in minutes with a single Markdown file.
-        </p>
-      </div>
-
-      <!-- ── MCP-Powered Power Skills ──────────────────────────────────────── -->
-      <div class="mb-20">
-        <div class="flex items-center gap-4 mb-8 section-reveal">
-          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full"
-               style="background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.3);">
-            <div class="w-1.5 h-1.5 rounded-full" style="background:#9d5ff0;animation:dataPulse 1.5s ease-in-out infinite;"></div>
-            <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#9d5ff0;letter-spacing:0.1em;">MCP-POWERED SKILLS</span>
-          </div>
-          <div class="flex-1 h-px" style="background:linear-gradient(to right,rgba(124,58,237,0.3),transparent);"></div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          @for (ps of powerSkills; track ps.cmd; let i = $index) {
-            <div class="rounded-2xl p-6 section-reveal flex flex-col gap-5 relative overflow-hidden"
-                 [class]="'delay-' + ((i + 1) * 100)"
-                 style="background:rgba(255,255,255,0.028);border:1px solid #1e1e38;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);">
-              <!-- Glow bg accent -->
-              <div class="absolute top-0 right-0 w-48 h-48 rounded-full pointer-events-none"
-                   [style]="'background:radial-gradient(circle,rgba(' + colorToRgb(ps.color) + ',0.08) 0%,transparent 70%);transform:translate(30%,-30%);'"></div>
-              <!-- Top row -->
-              <div class="flex items-start justify-between gap-4 relative z-10">
-                <div>
-                  <div class="flex items-center gap-2 mb-2">
-                    <div class="inline-flex items-center px-2 py-0.5 rounded"
-                         [style.background]="'rgba(' + colorToRgb(ps.color) + ',0.1)'">
-                      <span style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;" [style.color]="ps.color">{{ ps.category }}</span>
-                    </div>
-                    <div class="inline-flex items-center gap-1 px-2 py-0.5 rounded"
-                         style="background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.2);">
-                      <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#9d5ff0" stroke-width="2" stroke-linecap="round">
-                        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
-                      </svg>
-                      <span style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:#9d5ff0;letter-spacing:0.08em;">{{ ps.mcp }}</span>
-                    </div>
-                  </div>
-                  <div style="font-family:'JetBrains Mono',monospace;font-size:0.95rem;font-weight:600;" [style.color]="ps.color">
-                    {{ ps.cmd }}
-                  </div>
-                </div>
-                <!-- Icon -->
-                <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                     [style.background]="'rgba(' + colorToRgb(ps.color) + ',0.12)'"
-                     [style.border]="'1px solid rgba(' + colorToRgb(ps.color) + ',0.2)'">
-                  @if (ps.icon === 'rabbit') {
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" [attr.stroke]="ps.color" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M20.38 3.46L16 2a4 4 0 01-7.95.62L4 5.63A4 4 0 002 9v1a4 4 0 004 4h12a4 4 0 004-4V9a4 4 0 00-1.62-3.54z"/>
-                      <path d="M10 14v6m4-6v6M8 20h8"/>
-                    </svg>
-                  }
-                  @if (ps.icon === 'playwright') {
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" [attr.stroke]="ps.color" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                      <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
-                      <circle cx="12" cy="10" r="3"/>
-                    </svg>
-                  }
-                  @if (ps.icon === 'docs') {
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" [attr.stroke]="ps.color" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-                      <polyline points="14 2 14 8 20 8"/>
-                      <line x1="9" y1="13" x2="15" y2="13"/>
-                      <line x1="9" y1="17" x2="13" y2="17"/>
-                    </svg>
-                  }
-                  @if (ps.icon === 'chrome') {
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" [attr.stroke]="ps.color" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="12" cy="12" r="10"/>
-                      <circle cx="12" cy="12" r="4"/>
-                      <line x1="21.17" y1="8" x2="12" y2="8"/>
-                      <line x1="3.95" y1="6.06" x2="8.54" y2="14"/>
-                      <line x1="10.88" y1="21.94" x2="15.46" y2="14"/>
-                    </svg>
-                  }
-                </div>
-              </div>
-              <!-- Title + description -->
-              <div class="relative z-10">
-                <h3 style="font-size:1.05rem;font-weight:700;color:#f0f0ff;margin-bottom:6px;">{{ ps.title }}</h3>
-                <p style="font-size:0.83rem;line-height:1.65;color:#8888aa;">{{ ps.description }}</p>
-              </div>
-              <!-- Pipeline -->
-              <div class="relative z-10">
-                <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:#4a4a6a;letter-spacing:0.1em;margin-bottom:6px;">PIPELINE</div>
-                <div class="flex items-center gap-1 flex-wrap">
-                  @for (step of ps.pipeline; track step; let pi = $index) {
-                    <span style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;padding:3px 7px;background:rgba(255,255,255,0.04);border-radius:4px;border:1px solid #1e1e38;" [style.color]="ps.color">
-                      {{ step }}
-                    </span>
-                    @if (pi < ps.pipeline.length - 1) {
-                      <span style="font-size:0.6rem;color:#2a2a4a;">›</span>
-                    }
-                  }
-                </div>
-              </div>
-              <!-- Example output -->
-              <div class="relative z-10 rounded-lg px-3 py-2" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.05);">
-                <span style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:#4a4a6a;margin-right:6px;">EXAMPLE</span>
-                <span style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;" [style.color]="ps.color">{{ ps.example }}</span>
-              </div>
-            </div>
-          }
-        </div>
-      </div>
-
-      <!-- ── Built-in Skills ────────────────────────────────────────────── -->
-      <div class="mb-20">
-        <div class="flex items-center gap-4 mb-8 section-reveal">
-          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full"
-               style="background:rgba(0,245,212,0.08);border:1px solid rgba(0,245,212,0.2);">
-            <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#00F5D4;letter-spacing:0.1em;">BUILT-IN SKILLS</span>
-          </div>
-          <div class="flex-1 h-px" style="background:linear-gradient(to right,rgba(0,245,212,0.25),transparent);"></div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          @for (skill of skills; track skill.cmd; let i = $index) {
-            <div class="card-glow rounded-2xl p-6 section-reveal flex flex-col gap-4" [class]="'delay-' + ((i % 3 + 1) * 100)"
-                 style="background:rgba(255,255,255,0.025);">
-              <div class="flex items-start justify-between gap-3">
-                <div>
-                  <div class="inline-flex items-center px-2 py-0.5 rounded mb-2"
-                       [style.background]="'rgba(' + colorToRgb(skill.color) + ',0.1)'">
-                    <span style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;" [style.color]="skill.color">{{ skill.category }}</span>
-                  </div>
-                  <div style="font-family:'JetBrains Mono',monospace;font-size:0.88rem;font-weight:600;" [style.color]="skill.color">
-                    {{ skill.cmd }}
-                  </div>
-                </div>
-                <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-                     [style.background]="'rgba(' + colorToRgb(skill.color) + ',0.12)'">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" [attr.stroke]="skill.color" stroke-width="2" stroke-linecap="round">
-                    <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
-                  </svg>
-                </div>
-              </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          @for (m of atMentions; track m.mention; let i = $index) {
+            <div class="rounded-xl p-4 flex items-center gap-3 section-reveal" [class]="'delay-' + ((i+1)*100)"
+                 style="background:rgba(255,255,255,0.025);border:1px solid #1e1e38;">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 font-bold text-sm"
+                   [style.background]="'rgba(' + colorToRgb(m.color) + ',0.12)'"
+                   [style.color]="m.color"
+                   style="font-family:'JetBrains Mono',monospace;">@</div>
               <div>
-                <h3 style="font-size:1rem;font-weight:700;color:#f0f0ff;margin-bottom:6px;">{{ skill.title }}</h3>
-                <p style="font-size:0.83rem;line-height:1.6;color:#8888aa;">{{ skill.description }}</p>
-              </div>
-              <div class="flex items-center gap-1 flex-wrap mt-auto">
-                @for (step of skill.steps; track step; let si = $index) {
-                  <span style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:#4a4a6a;padding:2px 6px;background:rgba(255,255,255,0.04);border-radius:4px;border:1px solid #1e1e38;">
-                    {{ step }}
-                  </span>
-                  @if (si < skill.steps.length - 1) {
-                    <span style="font-size:0.6rem;color:#2a2a4a;">›</span>
-                  }
-                }
+                <div style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;font-weight:500;" [style.color]="m.color">{{ m.mention }}</div>
+                <div style="font-size:0.75rem;color:#8888aa;margin-top:2px;">{{ m.desc }}</div>
               </div>
             </div>
           }
         </div>
       </div>
 
-      <!-- ── How to Build a Skill: 5-Step Process ──────────────────────── -->
-      <div class="mb-20">
-        <div class="flex items-center gap-4 mb-8 section-reveal">
-          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full"
-               style="background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.25);">
-            <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#FF6B35;letter-spacing:0.1em;">HOW TO BUILD A SKILL</span>
-          </div>
-          <div class="flex-1 h-px" style="background:linear-gradient(to right,rgba(255,107,53,0.25),transparent);"></div>
-        </div>
+      <!-- Prompt comparison: weak vs strong -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 section-reveal delay-200">
 
-        <div class="space-y-4">
-          @for (step of creationSteps; track step.n; let i = $index) {
-            <div class="section-reveal rounded-2xl overflow-hidden" [class]="'delay-' + ((i + 1) * 100)"
-                 style="background:rgba(255,255,255,0.022);border:1px solid #1e1e38;">
-              <div class="grid grid-cols-1 md:grid-cols-5 gap-0">
-                <!-- Step meta -->
-                <div class="p-6 flex flex-col justify-between border-b md:border-b-0 md:border-r"
-                     style="border-color:#1e1e38;">
-                  <div>
-                    <div style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:300;line-height:1;opacity:0.3;margin-bottom:10px;" [style.color]="step.color">{{ step.n }}</div>
-                    <h4 style="font-size:0.98rem;font-weight:700;color:#f0f0ff;line-height:1.3;">{{ step.title }}</h4>
-                  </div>
-                  <div class="w-6 h-1 rounded-full mt-4" [style.background]="step.color"></div>
-                </div>
-                <!-- Detail -->
-                <div class="p-6 md:col-span-2 flex flex-col justify-center border-b md:border-b-0 md:border-r" style="border-color:#1e1e38;">
-                  <p style="font-size:0.85rem;line-height:1.7;color:#8888aa;">{{ step.detail }}</p>
-                </div>
-                <!-- Code hint -->
-                <div class="p-5 md:col-span-2 flex items-center">
-                  <pre class="w-full rounded-lg p-4 overflow-x-auto"
-                       style="background:rgba(0,0,0,0.35);border:1px solid #1e1e38;font-family:'JetBrains Mono',monospace;font-size:0.72rem;line-height:1.8;white-space:pre;margin:0;" [style.color]="step.color">{{ step.hint }}</pre>
-                </div>
-              </div>
+        <!-- Weak prompt -->
+        <div class="rounded-2xl p-6" style="background:rgba(255,107,53,0.05);border:1px solid rgba(255,107,53,0.2);">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-6 h-6 rounded-full flex items-center justify-center" style="background:rgba(255,107,53,0.15);">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2.5" stroke-linecap="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
             </div>
-          }
-        </div>
-      </div>
-
-      <!-- ── Frontmatter Reference ──────────────────────────────────────── -->
-      <div class="mb-20 section-reveal delay-100">
-        <div class="flex items-center gap-4 mb-8">
-          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full"
-               style="background:rgba(0,245,212,0.08);border:1px solid rgba(0,245,212,0.2);">
-            <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#00F5D4;letter-spacing:0.1em;">FRONTMATTER REFERENCE</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#FF6B35;letter-spacing:0.1em;">WEAK PROMPT</span>
           </div>
-          <div class="flex-1 h-px" style="background:linear-gradient(to right,rgba(0,245,212,0.2),transparent);"></div>
-        </div>
-        <div class="rounded-2xl overflow-hidden" style="background:rgba(255,255,255,0.022);border:1px solid #1e1e38;">
-          <div class="grid grid-cols-12 px-6 py-3" style="background:rgba(0,0,0,0.25);border-bottom:1px solid #1e1e38;">
-            <div class="col-span-3" style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:#4a4a6a;letter-spacing:0.1em;">FIELD</div>
-            <div class="col-span-2" style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:#4a4a6a;letter-spacing:0.1em;">TYPE</div>
-            <div class="col-span-2" style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:#4a4a6a;letter-spacing:0.1em;">REQUIRED</div>
-            <div class="col-span-5" style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:#4a4a6a;letter-spacing:0.1em;">DESCRIPTION</div>
+          <div class="rounded-xl p-4 mb-4" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,107,53,0.15);font-family:'JetBrains Mono',monospace;font-size:0.82rem;color:#f0c4b0;line-height:1.6;">
+            "{{ promptWeak.text }}"
           </div>
-          @for (f of frontmatterFields; track f.field; let i = $index) {
-            <div class="grid grid-cols-12 px-6 py-4 items-center"
-                 [style.background]="i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.012)'"
-                 style="border-bottom:1px solid #1e1e38;">
-              <div class="col-span-3">
-                <code style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:#00F5D4;background:rgba(0,245,212,0.07);padding:2px 7px;border-radius:4px;">{{ f.field }}</code>
-              </div>
-              <div class="col-span-2" style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#9d5ff0;">{{ f.type }}</div>
-              <div class="col-span-2">
-                @if (f.required) {
-                  <span style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;background:rgba(255,107,53,0.12);color:#FF6B35;padding:2px 8px;border-radius:4px;border:1px solid rgba(255,107,53,0.2);">required</span>
-                } @else {
-                  <span style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#4a4a6a;">optional</span>
-                }
-              </div>
-              <div class="col-span-5" style="font-size:0.82rem;color:#8888aa;line-height:1.5;">{{ f.desc }}</div>
-            </div>
-          }
-        </div>
-      </div>
-
-      <!-- ── Best Practices ────────────────────────────────────────────── -->
-      <div class="mb-20">
-        <div class="flex items-center gap-4 mb-8 section-reveal">
-          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full"
-               style="background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.25);">
-            <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#9d5ff0;letter-spacing:0.1em;">BEST PRACTICES</span>
-          </div>
-          <div class="flex-1 h-px" style="background:linear-gradient(to right,rgba(124,58,237,0.25),transparent);"></div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          @for (bp of bestPractices; track bp.title; let i = $index) {
-            <div class="section-reveal rounded-xl p-5 flex gap-4" [class]="'delay-' + ((i % 4 + 1) * 100)"
-                 [style.background]="bp.type === 'do' ? 'rgba(0,245,212,0.04)' : 'rgba(255,107,53,0.04)'"
-                 [style.border]="bp.type === 'do' ? '1px solid rgba(0,245,212,0.14)' : '1px solid rgba(255,107,53,0.14)'">
-              <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-                   [style.background]="bp.type === 'do' ? 'rgba(0,245,212,0.12)' : 'rgba(255,107,53,0.12)'"
-                   [style.color]="bp.type === 'do' ? '#00F5D4' : '#FF6B35'"
-                   style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:0.05em;">
-                {{ bp.type === 'do' ? 'DO' : 'NO' }}
-              </div>
-              <div>
-                <h4 style="font-size:0.9rem;font-weight:700;margin-bottom:4px;"
-                    [style.color]="bp.type === 'do' ? '#c0f0e8' : '#f0c4b0'">{{ bp.title }}</h4>
-                <p style="font-size:0.8rem;line-height:1.6;color:#8888aa;">{{ bp.desc }}</p>
-              </div>
-            </div>
-          }
-        </div>
-      </div>
-
-      <!-- ── Author Your Own ────────────────────────────────────────────── -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 section-reveal delay-300">
-
-        <!-- Left: explanation -->
-        <div class="rounded-2xl p-8 flex flex-col justify-center"
-             style="background:linear-gradient(135deg,rgba(255,107,53,0.08) 0%,rgba(124,58,237,0.06) 100%);border:1px solid rgba(255,107,53,0.2);">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-6"
-               style="background:rgba(255,107,53,0.12);border:1px solid rgba(255,107,53,0.25);width:fit-content;">
-            <span style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:#FF6B35;letter-spacing:0.1em;">BUILD YOUR OWN</span>
-          </div>
-          <h3 style="font-size:1.5rem;font-weight:800;color:#f0f0ff;line-height:1.2;margin-bottom:12px;">
-            Author a skill in<br>under 5 minutes
-          </h3>
-          <p style="font-size:0.88rem;color:#8888aa;line-height:1.7;margin-bottom:20px;">
-            Skills live in <code style="background:rgba(255,255,255,0.06);color:#FF6B35;padding:2px 6px;border-radius:4px;font-size:0.8rem;">.claude/skills/&lt;name&gt;/SKILL.md</code>. Each skill is a folder containing a <code style="background:rgba(255,255,255,0.06);color:#FF6B35;padding:2px 6px;border-radius:4px;font-size:0.8rem;">SKILL.md</code> with YAML frontmatter and a prompt body — instantly available across every Claude Code session.
-          </p>
-          <div class="flex flex-col gap-3">
-            @for (step of [
-              { n:'1', t:'Create the folder', d:'.claude/skills/my-skill/' },
-              { n:'2', t:'Add SKILL.md', d:'YAML frontmatter + prompt body' },
-              { n:'3', t:'Write the prompt', d:'instructions, context, examples' },
-              { n:'4', t:'Invoke it', d:'/my-skill in any session' }
-            ]; track step.n) {
-              <div class="flex items-center gap-3">
-                <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
-                     style="background:rgba(255,107,53,0.15);border:1px solid rgba(255,107,53,0.3);">
-                  <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:#FF6B35;">{{ step.n }}</span>
-                </div>
-                <div>
-                  <span style="font-size:0.82rem;color:#f0f0ff;font-weight:600;">{{ step.t }}</span>
-                  <span style="font-size:0.78rem;color:#4a4a6a;margin-left:8px;font-family:'JetBrains Mono',monospace;">{{ step.d }}</span>
-                </div>
+          <div class="space-y-2">
+            @for (issue of promptWeak.issues; track issue) {
+              <div class="flex items-center gap-2">
+                <div class="w-1.5 h-1.5 rounded-full shrink-0" style="background:#FF6B35;opacity:0.7;"></div>
+                <span style="font-size:0.78rem;color:#8888aa;">{{ issue }}</span>
               </div>
             }
           </div>
         </div>
 
-        <!-- Right: skill file format -->
-        <div class="rounded-2xl overflow-hidden" style="background:#070710;border:1px solid #1e1e38;">
-          <div class="flex items-center gap-0 px-4 py-3" style="background:#0d0d1c;border-bottom:1px solid #1e1e38;">
-            <div class="flex items-center gap-2 px-3 py-1.5 rounded-t-md" style="background:#070710;border:1px solid #1e1e38;border-bottom:1px solid #070710;margin-bottom:-1px;">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2">
-                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
+        <!-- Strong prompt -->
+        <div class="rounded-2xl p-6" style="background:rgba(0,245,212,0.04);border:1px solid rgba(0,245,212,0.18);">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-6 h-6 rounded-full flex items-center justify-center" style="background:rgba(0,245,212,0.15);">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#00F5D4" stroke-width="2.5" stroke-linecap="round">
+                <polyline points="20 6 9 17 4 12"/>
               </svg>
-              <span style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#8888aa;">.claude/skills/ship/SKILL.md</span>
+            </div>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#00F5D4;letter-spacing:0.1em;">STRONG PROMPT</span>
+          </div>
+          <div class="rounded-xl p-4 mb-4" style="background:rgba(0,0,0,0.3);border:1px solid rgba(0,245,212,0.12);font-family:'JetBrains Mono',monospace;font-size:0.78rem;line-height:1.8;white-space:pre-wrap;">
+            @for (part of promptStrong.parts; track $index) {
+              <span [style.color]="part.color">{{ part.text }}</span>
+            }
+          </div>
+          <div class="flex flex-wrap gap-2">
+            @for (h of promptStrong.highlights; track h) {
+              <span class="px-2 py-0.5 rounded text-xs"
+                    style="background:rgba(0,245,212,0.1);color:#00F5D4;font-family:'JetBrains Mono',monospace;font-size:0.62rem;border:1px solid rgba(0,245,212,0.2);">
+                ✓ {{ h }}
+              </span>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ GIT WORKFLOW ═══ -->
+  <section id="git" class="py-28 px-6 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute rounded-full" style="width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,107,53,0.05) 0%,transparent 65%);"></div>
+    </div>
+    <div class="max-w-6xl mx-auto relative z-10">
+
+      <div class="text-center mb-16 section-reveal">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5"
+             style="background:rgba(255,107,53,0.09);border:1px solid rgba(255,107,53,0.25);">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#FF6B35;letter-spacing:0.12em;">GIT WORKFLOW · /commit · /clear</span>
+        </div>
+        <h2 style="font-size:clamp(2rem,4vw,2.8rem);font-weight:800;color:#f0f0ff;letter-spacing:-0.02em;">
+          Task by task, commit by commit
+        </h2>
+        <p class="mt-4" style="color:#8888aa;font-size:1rem;line-height:1.7;max-width:500px;margin-left:auto;margin-right:auto;">
+          The golden loop: one focused task → review every diff → <code style="color:#FF6B35;">/commit</code> → <code style="color:#00F5D4;">/clear</code>. Repeat. Never skip the review step.
+        </p>
+      </div>
+
+      <!-- 4-step cycle -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12 section-reveal">
+        @for (step of gitCycle; track step.phase; let i = $index) {
+          <div class="rounded-xl p-5 relative" [class]="'delay-' + ((i+1)*100)"
+               style="background:rgba(255,255,255,0.025);border:1px solid #1e1e38;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;margin-bottom:8px;" [style.color]="step.color">{{ step.phase }}</div>
+            <h3 style="font-size:0.92rem;font-weight:700;color:#f0f0ff;margin-bottom:6px;line-height:1.3;">{{ step.title }}</h3>
+            <p style="font-size:0.78rem;color:#8888aa;line-height:1.5;">{{ step.detail }}</p>
+            @if (i < gitCycle.length - 1) {
+              <div class="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 z-10"
+                   style="font-family:'JetBrains Mono',monospace;font-size:1rem;color:#2a2a4a;">›</div>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Terminal: full cycle demo -->
+      <div class="section-reveal delay-300 rounded-2xl overflow-hidden"
+           style="background:#070710;border:1px solid #1e1e38;box-shadow:0 40px 80px rgba(0,0,0,0.5);">
+        <div class="flex items-center gap-2 px-5 py-3.5" style="background:#0d0d1c;border-bottom:1px solid #1e1e38;">
+          <div class="w-3 h-3 rounded-full" style="background:#FF5F57;"></div>
+          <div class="w-3 h-3 rounded-full" style="background:#FEBC2E;"></div>
+          <div class="w-3 h-3 rounded-full" style="background:#28C840;"></div>
+          <span class="mx-auto" style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#4a4a6a;">claude-code — task · commit · clear cycle</span>
+        </div>
+        <div class="p-6 md:p-8" style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;line-height:2.1;">
+          @for (line of gitTerminalLines; track $index) {
+            @if (line.type === 'gap')    { <br> }
+            @if (line.type === 'prompt') { <div style="color:#00F5D4;">{{ line.text }}</div> }
+            @if (line.type === 'think')  { <div style="color:#9d5ff0;padding-left:14px;">{{ line.text }}</div> }
+            @if (line.type === 'action') { <div style="color:#f0f0ff;padding-left:14px;">{{ line.text }}</div> }
+            @if (line.type === 'info')   { <div style="color:#8888aa;padding-left:14px;">{{ line.text }}</div> }
+            @if (line.type === 'success'){ <div style="color:#39FF14;padding-left:14px;">{{ line.text }}</div> }
+            @if (line.type === 'muted')  { <div style="color:#4a4a6a;padding-left:14px;">{{ line.text }}</div> }
+            @if (line.type === 'warn')   { <div style="color:#f59e0b;padding-left:14px;">{{ line.text }}</div> }
+            @if (line.type === 'cursor') {
+              <span style="color:#00F5D4;">{{ line.text }}</span>
+              <span class="terminal-cursor" style="color:#00F5D4;"></span>
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Token tips -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+        @for (tip of tokenTips; track tip.title; let i = $index) {
+          <div class="section-reveal rounded-xl p-5" [class]="'delay-' + ((i+1)*100)"
+               style="background:rgba(255,255,255,0.025);border:1px solid #1e1e38;">
+            <div class="inline-flex items-center px-2 py-0.5 rounded mb-3"
+                 [style.background]="'rgba(' + colorToRgb(tip.color) + ',0.1)'">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;" [style.color]="tip.color">{{ tip.tag }}</span>
+            </div>
+            <h4 style="font-size:0.88rem;font-weight:700;color:#f0f0ff;margin-bottom:5px;">{{ tip.title }}</h4>
+            <p style="font-size:0.78rem;color:#8888aa;line-height:1.55;">{{ tip.desc }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ SKILLS ═══ -->
+  <section id="skills" class="py-28 px-6 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute rounded-full" style="width:700px;height:700px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(124,58,237,0.05) 0%,transparent 65%);"></div>
+    </div>
+    <div class="max-w-6xl mx-auto relative z-10">
+
+      <div class="text-center mb-16 section-reveal">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5"
+             style="background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.25);">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#9d5ff0;letter-spacing:0.12em;">SKILLS · /plugins · MARKETPLACE</span>
+        </div>
+        <h2 style="font-size:clamp(2rem,4vw,2.8rem);font-weight:800;color:#f0f0ff;letter-spacing:-0.02em;">
+          Skills multiply your output
+        </h2>
+        <p class="mt-4" style="color:#8888aa;font-size:1rem;line-height:1.7;max-width:500px;margin-left:auto;margin-right:auto;">
+          Skills are agent programs triggered by a slash command. Install official ones from the marketplace or write your own in minutes.
+        </p>
+      </div>
+
+      <!-- Why skills are powerful -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-14 section-reveal">
+        @for (why of [
+          { icon:'repeat', title:'Reusable',   desc:'Write once, invoke forever. Same skill works across every project.',     color:'#00F5D4' },
+          { icon:'share',  title:'Shareable',  desc:'Commit .claude/skills/ to git. Your whole team gets the same superpowers.', color:'#7C3AED' },
+          { icon:'stack',  title:'Composable', desc:'Chain skills together. /ship calls /commit internally. Compose workflows.', color:'#FF6B35' }
+        ]; track why.title; let i = $index) {
+          <div class="rounded-xl p-5 section-reveal" [class]="'delay-' + ((i+1)*100)"
+               [style.background]="'rgba(' + colorToRgb(why.color) + ',0.04)'"
+               [style.border]="'1px solid rgba(' + colorToRgb(why.color) + ',0.15)'">
+            <div class="w-8 h-8 rounded-lg mb-3 flex items-center justify-center"
+                 [style.background]="'rgba(' + colorToRgb(why.color) + ',0.12)'">
+              @if (why.icon === 'repeat') {
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" [attr.stroke]="why.color" stroke-width="2" stroke-linecap="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
+              }
+              @if (why.icon === 'share') {
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" [attr.stroke]="why.color" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              }
+              @if (why.icon === 'stack') {
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" [attr.stroke]="why.color" stroke-width="2" stroke-linecap="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              }
+            </div>
+            <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:5px;" [style.color]="why.color">{{ why.title }}</h3>
+            <p style="font-size:0.8rem;color:#8888aa;line-height:1.55;">{{ why.desc }}</p>
+          </div>
+        }
+      </div>
+
+      <!-- /plugins terminal + official repo link -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-14">
+
+        <!-- /plugins terminal -->
+        <div class="section-reveal rounded-2xl overflow-hidden" style="background:#070710;border:1px solid #1e1e38;">
+          <div class="flex items-center gap-2 px-5 py-3" style="background:#0d0d1c;border-bottom:1px solid #1e1e38;">
+            <div class="w-3 h-3 rounded-full" style="background:#FF5F57;"></div>
+            <div class="w-3 h-3 rounded-full" style="background:#FEBC2E;"></div>
+            <div class="w-3 h-3 rounded-full" style="background:#28C840;"></div>
+            <span class="mx-auto" style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#4a4a6a;">claude-code — plugin manager</span>
+          </div>
+          <div class="p-6" style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;line-height:2.1;">
+            @for (line of pluginsLines; track $index) {
+              @if (line.type === 'gap')     { <br> }
+              @if (line.type === 'prompt')  { <div style="color:#00F5D4;">{{ line.text }}</div> }
+              @if (line.type === 'header')  { <div style="color:#f0f0ff;font-weight:600;">{{ line.text }}</div> }
+              @if (line.type === 'info')    { <div style="color:#8888aa;">{{ line.text }}</div> }
+              @if (line.type === 'link')    { <div style="color:#9d5ff0;">{{ line.text }}</div> }
+              @if (line.type === 'cursor')  {
+                <span style="color:#00F5D4;">{{ line.text }}</span>
+                <span class="terminal-cursor" style="color:#00F5D4;"></span>
+              }
+              @if (line.type === 'plugin') {
+                <div class="flex items-center gap-3">
+                  <span style="color:#4a4a6a;">  ·</span>
+                  <span style="color:#f0f0ff;">{{ line['name'] }}</span>
+                  <span class="px-1.5 py-0.5 rounded text-xs" [style.background]="'rgba(' + colorToRgb(line['color'] || '#00F5D4') + ',0.1)'" [style.color]="line['color']"
+                        style="font-size:0.6rem;letter-spacing:0.08em;">{{ line['category'] }}</span>
+                </div>
+              }
+            }
+          </div>
+        </div>
+
+        <!-- Official repo + install instructions -->
+        <div class="flex flex-col gap-4 section-reveal delay-200">
+          <div class="rounded-2xl p-6 flex-1"
+               style="background:linear-gradient(135deg,rgba(124,58,237,0.1) 0%,rgba(0,245,212,0.06) 100%);border:1px solid rgba(124,58,237,0.25);">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-5"
+                 style="background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);width:fit-content;">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:#9d5ff0;letter-spacing:0.1em;">OFFICIAL SKILLS REPO</span>
+            </div>
+            <h3 style="font-size:1.1rem;font-weight:700;color:#f0f0ff;margin-bottom:8px;">Install any skill in one command</h3>
+            <p style="font-size:0.84rem;color:#8888aa;line-height:1.7;margin-bottom:16px;">
+              The official Claude Code skills marketplace lives on GitHub. Browse, install, and contribute skills directly from the repo.
+            </p>
+            <!-- Copyable URL -->
+            <div class="rounded-xl px-4 py-3 flex items-center gap-3 mb-4"
+                 style="background:rgba(0,0,0,0.4);border:1px solid rgba(124,58,237,0.2);">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9d5ff0" stroke-width="2" stroke-linecap="round">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/>
+              </svg>
+              <code style="font-family:'JetBrains Mono',monospace;font-size:0.76rem;color:#9d5ff0;flex:1;">{{ officialSkillsRepo }}</code>
+            </div>
+            <div class="rounded-xl px-4 py-3"
+                 style="background:rgba(0,0,0,0.3);border:1px solid #1e1e38;font-family:'JetBrains Mono',monospace;font-size:0.76rem;line-height:2;">
+              <div><span style="color:#4a4a6a;">$ </span><span style="color:#00F5D4;">/plugin-install frontend-design</span></div>
+              <div><span style="color:#4a4a6a;">$ </span><span style="color:#00F5D4;">/plugin-install coderabbit</span></div>
+              <div><span style="color:#4a4a6a;">$ </span><span style="color:#00F5D4;">/reload-plugins</span></div>
             </div>
           </div>
-          <div class="p-5" style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;line-height:1.9;overflow-x:auto;">
+        </div>
+      </div>
+
+      <!-- Marketplace skills grid -->
+      <div class="mb-14">
+        <div class="flex items-center gap-4 mb-6 section-reveal">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full"
+               style="background:rgba(0,245,212,0.08);border:1px solid rgba(0,245,212,0.2);">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#00F5D4;letter-spacing:0.1em;">OFFICIAL SKILLS</span>
+          </div>
+          <div class="flex-1 h-px" style="background:linear-gradient(to right,rgba(0,245,212,0.25),transparent);"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          @for (s of marketplaceSkills; track s.name; let i = $index) {
+            <div class="card-glow rounded-xl p-5 section-reveal" [class]="'delay-' + ((i%3+1)*100)"
+                 style="background:rgba(255,255,255,0.025);">
+              <div class="flex items-center justify-between mb-3">
+                <div class="inline-flex items-center px-2 py-0.5 rounded"
+                     [style.background]="'rgba(' + colorToRgb(s.color) + ',0.1)'">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;" [style.color]="s.color">{{ s.category }}</span>
+                </div>
+                <span class="px-2 py-0.5 rounded" style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:#4a4a6a;background:rgba(255,255,255,0.04);border:1px solid #1e1e38;">OFFICIAL</span>
+              </div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:0.88rem;font-weight:600;margin-bottom:6px;" [style.color]="s.color">{{ s.cmd }}</div>
+              <p style="font-size:0.8rem;color:#8888aa;line-height:1.55;">{{ s.desc }}</p>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- My skills -->
+      <div>
+        <div class="flex items-center gap-4 mb-6 section-reveal">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full"
+               style="background:rgba(255,107,53,0.09);border:1px solid rgba(255,107,53,0.22);">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#FF6B35;letter-spacing:0.1em;">MY SKILLS</span>
+          </div>
+          <div class="flex-1 h-px" style="background:linear-gradient(to right,rgba(255,107,53,0.22),transparent);"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          @for (s of mySkills; track s.cmd; let i = $index) {
+            <div class="card-glow rounded-xl p-5 section-reveal" [class]="'delay-' + ((i%3+1)*100)"
+                 style="background:rgba(255,255,255,0.025);">
+              <div class="flex items-center justify-between mb-3">
+                <div class="inline-flex items-center px-2 py-0.5 rounded"
+                     [style.background]="'rgba(' + colorToRgb(s.color) + ',0.1)'">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;" [style.color]="s.color">{{ s.category }}</span>
+                </div>
+                <span class="px-2 py-0.5 rounded" style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:#9d5ff0;background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);">CUSTOM</span>
+              </div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:0.88rem;font-weight:600;margin-bottom:6px;" [style.color]="s.color">{{ s.cmd }}</div>
+              <p style="font-size:0.8rem;color:#8888aa;line-height:1.55;">{{ s.desc }}</p>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ CHROME EXTENSION ═══ -->
+  <section id="chrome" class="py-28 px-6 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute rounded-full" style="width:600px;height:600px;top:50%;right:0;transform:translateY(-50%);background:radial-gradient(circle,rgba(0,245,212,0.05) 0%,transparent 65%);"></div>
+    </div>
+    <div class="max-w-6xl mx-auto relative z-10">
+
+      <div class="text-center mb-16 section-reveal">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5"
+             style="background:rgba(0,245,212,0.08);border:1px solid rgba(0,245,212,0.2);">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#00F5D4;letter-spacing:0.12em;">CHROME MCP · BROWSER AUTOMATION</span>
+        </div>
+        <h2 style="font-size:clamp(2rem,4vw,2.8rem);font-weight:800;color:#f0f0ff;letter-spacing:-0.02em;">
+          Claude in your browser
+        </h2>
+        <p class="mt-4" style="color:#8888aa;font-size:1rem;line-height:1.7;max-width:520px;margin-left:auto;margin-right:auto;">
+          The Claude-in-Chrome MCP extension connects Claude Code to your live browser — clicks, forms, console logs, network requests, screenshots — all from a single command.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+
+        <!-- Feature list -->
+        <div class="space-y-3 section-reveal">
+          @for (feat of [
+            { icon:'eye',     label:'Read the DOM',            desc:'Snapshot any page structure and extract data', color:'#00F5D4' },
+            { icon:'click',   label:'Click & fill forms',      desc:'Interact with any element like a real user',     color:'#7C3AED' },
+            { icon:'console', label:'Read console logs',       desc:'Capture JS errors and warnings in real time',   color:'#FF6B35' },
+            { icon:'network', label:'Capture network requests',desc:'Inspect API calls, headers, and responses',      color:'#00F5D4' },
+            { icon:'camera',  label:'Full-page screenshots',   desc:'Document any state for debugging or reports',   color:'#7C3AED' },
+            { icon:'gif',     label:'Record GIF sessions',     desc:'Capture multi-step interactions as animated GIFs',color:'#FF6B35' }
+          ]; track feat.label; let i = $index) {
+            <div class="flex items-center gap-4 rounded-xl p-4 section-reveal" [class]="'delay-' + ((i+1)*100)"
+                 style="background:rgba(255,255,255,0.025);border:1px solid #1e1e38;">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+                   [style.background]="'rgba(' + colorToRgb(feat.color) + ',0.12)'">
+                <div class="w-2 h-2 rounded-full" [style.background]="feat.color"></div>
+              </div>
+              <div>
+                <div style="font-size:0.88rem;font-weight:600;color:#f0f0ff;">{{ feat.label }}</div>
+                <div style="font-size:0.76rem;color:#8888aa;margin-top:2px;">{{ feat.desc }}</div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Use case walkthrough -->
+        <div class="section-reveal delay-200 rounded-2xl p-7"
+             style="background:rgba(255,255,255,0.025);border:1px solid rgba(0,245,212,0.18);">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-5"
+               style="background:rgba(0,245,212,0.1);border:1px solid rgba(0,245,212,0.2);width:fit-content;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:#00F5D4;letter-spacing:0.1em;">USE CASE — DEBUG A PROD ISSUE</span>
+          </div>
+          <div class="space-y-4">
+            @for (step of chromeUseCase; track step.step; let i = $index) {
+              <div class="flex items-start gap-4">
+                <div class="w-7 h-7 rounded-full flex items-center justify-center shrink-0 font-bold"
+                     [style.background]="'rgba(' + colorToRgb(step.color) + ',0.12)'"
+                     [style.border]="'1px solid rgba(' + colorToRgb(step.color) + ',0.3)'">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;" [style.color]="step.color">{{ step.step }}</span>
+                </div>
+                <div class="flex-1">
+                  <div style="font-size:0.86rem;color:#f0f0ff;line-height:1.4;">{{ step.action }}</div>
+                  <div class="inline-flex items-center px-2 py-0.5 rounded mt-1.5"
+                       [style.background]="'rgba(' + colorToRgb(step.color) + ',0.08)'">
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;" [style.color]="step.color">{{ step.tool }}</span>
+                  </div>
+                </div>
+                @if (i < chromeUseCase.length - 1) {
+                  <div class="absolute left-3.5 mt-7 w-px h-4 ml-3.5" style="background:#1e1e38;"></div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ CREATE A SKILL ═══ -->
+  <section class="py-28 px-6 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute rounded-full" style="width:600px;height:600px;top:50%;left:30%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,107,53,0.05) 0%,transparent 65%);"></div>
+    </div>
+    <div class="max-w-6xl mx-auto relative z-10">
+
+      <div class="text-center mb-16 section-reveal">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5"
+             style="background:rgba(255,107,53,0.09);border:1px solid rgba(255,107,53,0.25);">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#FF6B35;letter-spacing:0.12em;">CREATE YOUR OWN SKILL</span>
+        </div>
+        <h2 style="font-size:clamp(2rem,4vw,2.8rem);font-weight:800;color:#f0f0ff;letter-spacing:-0.02em;">
+          Author a skill in 5 minutes
+        </h2>
+        <p class="mt-4" style="color:#8888aa;font-size:1rem;line-height:1.7;max-width:500px;margin-left:auto;margin-right:auto;">
+          A skill is just a folder with a <code style="color:#FF6B35;">SKILL.md</code> inside <code style="color:#FF6B35;">.claude/skills/</code>. That's it.
+        </p>
+      </div>
+
+      <!-- 4-step build process -->
+      <div class="space-y-4 mb-12">
+        @for (step of skillBuildSteps; track step.n; let i = $index) {
+          <div class="section-reveal rounded-2xl overflow-hidden" [class]="'delay-' + ((i+1)*100)"
+               style="background:rgba(255,255,255,0.022);border:1px solid #1e1e38;">
+            <div class="grid grid-cols-1 md:grid-cols-5">
+              <!-- Step number + title -->
+              <div class="p-6 flex flex-col justify-between border-b md:border-b-0 md:border-r" style="border-color:#1e1e38;">
+                <div>
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:300;line-height:1;opacity:0.25;margin-bottom:10px;" [style.color]="step.color">{{ step.n }}</div>
+                  <h4 style="font-size:0.95rem;font-weight:700;color:#f0f0ff;line-height:1.3;">{{ step.title }}</h4>
+                </div>
+                <div class="w-5 h-0.5 rounded mt-4" [style.background]="step.color"></div>
+              </div>
+              <!-- Detail text -->
+              <div class="p-6 md:col-span-2 flex items-center border-b md:border-b-0 md:border-r" style="border-color:#1e1e38;">
+                <p style="font-size:0.85rem;line-height:1.7;color:#8888aa;">{{ step.detail }}</p>
+              </div>
+              <!-- Code hint -->
+              <div class="p-5 md:col-span-2 flex items-center">
+                <pre class="w-full rounded-xl p-4 overflow-x-auto"
+                     style="background:rgba(0,0,0,0.4);border:1px solid #1e1e38;font-family:'JetBrains Mono',monospace;font-size:0.73rem;line-height:1.9;white-space:pre;margin:0;" [style.color]="step.color">{{ step.hint }}</pre>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Live example: ship/SKILL.md -->
+      <div class="section-reveal delay-300 grid grid-cols-1 lg:grid-cols-5 gap-6 rounded-2xl overflow-hidden"
+           style="background:rgba(255,255,255,0.022);border:1px solid rgba(255,107,53,0.2);">
+        <!-- Explanation -->
+        <div class="p-8 lg:col-span-2 flex flex-col justify-center" style="border-right:1px solid #1e1e38;">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-5"
+               style="background:rgba(255,107,53,0.12);border:1px solid rgba(255,107,53,0.25);width:fit-content;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:#FF6B35;letter-spacing:0.1em;">REAL EXAMPLE</span>
+          </div>
+          <h3 style="font-size:1.2rem;font-weight:800;color:#f0f0ff;line-height:1.2;margin-bottom:10px;">/ship skill</h3>
+          <p style="font-size:0.84rem;color:#8888aa;line-height:1.7;margin-bottom:16px;">
+            Initializes git, writes a conventional commit, creates the GitHub repo, and deploys to Vercel — in one command.
+          </p>
+          <div class="space-y-2">
+            @for (flag of ['--private','--prod','--no-github','--no-vercel']; track flag) {
+              <div class="flex items-center gap-2">
+                <code style="font-family:'JetBrains Mono',monospace;font-size:0.76rem;color:#FF6B35;background:rgba(255,107,53,0.08);padding:2px 8px;border-radius:4px;">/ship {{ flag }}</code>
+              </div>
+            }
+          </div>
+        </div>
+        <!-- SKILL.md file preview -->
+        <div class="lg:col-span-3 overflow-hidden" style="background:#070710;">
+          <div class="flex items-center gap-2 px-4 py-3" style="background:#0d0d1c;border-bottom:1px solid #1e1e38;">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
+            </svg>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#8888aa;">.claude/skills/ship/SKILL.md</span>
+          </div>
+          <div class="p-5" style="font-family:'JetBrains Mono',monospace;font-size:0.74rem;line-height:1.9;overflow-x:auto;">
             <div style="color:#4a4a6a;">---</div>
-            <div><span style="color:#00F5D4;">name</span><span style="color:#8888aa;">: </span><span style="color:#f0f0ff;">ship</span></div>
-            <div><span style="color:#00F5D4;">description</span><span style="color:#8888aa;">: </span><span style="color:#f0f0ff;">"Init, commit, GitHub & Vercel deploy"</span></div>
-            <div><span style="color:#00F5D4;">model</span><span style="color:#8888aa;">: </span><span style="color:#f0f0ff;">sonnet</span></div>
+            <div><span style="color:#00F5D4;">name</span><span style="color:#4a4a6a;">: </span><span style="color:#f0f0ff;">ship</span></div>
+            <div><span style="color:#00F5D4;">description</span><span style="color:#4a4a6a;">: </span><span style="color:#f0f0ff;">"Init, commit, GitHub & Vercel deploy"</span></div>
+            <div><span style="color:#00F5D4;">model</span><span style="color:#4a4a6a;">: </span><span style="color:#f0f0ff;">sonnet</span></div>
             <div style="color:#4a4a6a;">---</div>
             <br>
             <div style="color:#9d5ff0;"># Ship Skill</div>
             <br>
             <div style="color:#8888aa;">You are a deployment agent. When invoked:</div>
             <br>
-            <div><span style="color:#FF6B35;">1.</span><span style="color:#f0f0ff;"> Run </span><code style="color:#00F5D4;">git init</code><span style="color:#8888aa;"> if no repo exists</span></div>
-            <div><span style="color:#FF6B35;">2.</span><span style="color:#f0f0ff;"> Stage files and write a conventional commit</span></div>
-            <div><span style="color:#FF6B35;">3.</span><span style="color:#f0f0ff;"> Run </span><code style="color:#00F5D4;">gh repo create</code><span style="color:#8888aa;"> and push</span></div>
+            <div><span style="color:#FF6B35;">1.</span><span style="color:#f0f0ff;"> Check for git repo · </span><code style="color:#00F5D4;">git init</code><span style="color:#8888aa;"> if missing</span></div>
+            <div><span style="color:#FF6B35;">2.</span><span style="color:#f0f0ff;"> Stage files · write conventional commit</span></div>
+            <div><span style="color:#FF6B35;">3.</span><span style="color:#f0f0ff;"> Run </span><code style="color:#00F5D4;">gh repo create --push</code></div>
             <div><span style="color:#FF6B35;">4.</span><span style="color:#f0f0ff;"> Run </span><code style="color:#00F5D4;">vercel --prod --yes</code></div>
             <br>
-            <div style="color:#8888aa;">Flags: --private --prod<br>--no-github --no-vercel</div>
+            <div style="color:#4a4a6a;">## Flags: --private --prod --no-github --no-vercel</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════ WORKFLOW ═══ -->
-  <section id="workflow" class="py-28 px-6 relative overflow-hidden">
+  <!-- ══════════════════════════════════════════ AGENTS ═══ -->
+  <section id="agents" class="py-28 px-6 relative overflow-hidden">
     <div class="absolute inset-0 pointer-events-none">
-      <div class="absolute rounded-full" style="width:800px;height:800px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(124,58,237,0.06) 0%,transparent 65%);"></div>
+      <div class="absolute rounded-full" style="width:700px;height:700px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(124,58,237,0.06) 0%,transparent 65%);"></div>
     </div>
     <div class="max-w-6xl mx-auto relative z-10">
+
       <div class="text-center mb-16 section-reveal">
         <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5"
-             style="background:rgba(0,245,212,0.08);border:1px solid rgba(0,245,212,0.2);">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#00F5D4;letter-spacing:0.12em;">AGENT ORCHESTRATION</span>
+             style="background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.25);">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#9d5ff0;letter-spacing:0.12em;">AGENTS · ORCHESTRATION · MEMORY</span>
         </div>
-        <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;color:#f0f0ff;letter-spacing:-0.02em;">
-          How agent workflows operate
+        <h2 style="font-size:clamp(2rem,4vw,2.8rem);font-weight:800;color:#f0f0ff;letter-spacing:-0.02em;">
+          Why agents change everything
         </h2>
-        <p class="mt-4" style="color:#8888aa;font-size:1rem;line-height:1.7;max-width:480px;margin-left:auto;margin-right:auto;">
-          A top-level orchestrator decomposes goals and delegates to specialists — each running in parallel, communicating through structured outputs.
+        <p class="mt-4" style="color:#8888aa;font-size:1rem;line-height:1.7;max-width:500px;margin-left:auto;margin-right:auto;">
+          An agent isn't a better chatbot — it's an autonomous engineer that decomposes goals, uses tools, calls sub-agents in parallel, and accumulates knowledge across sessions.
         </p>
       </div>
 
-      <!-- Workflow diagram -->
-      <div class="section-reveal delay-200 rounded-2xl p-6 md:p-10 scan-container"
+      <!-- Agent types -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
+        @for (a of agentTypes; track a.role; let i = $index) {
+          <div class="card-glow rounded-2xl p-7 section-reveal" [class]="'delay-' + ((i+1)*100)"
+               style="background:rgba(255,255,255,0.025);">
+            <div class="inline-flex items-center px-2 py-0.5 rounded mb-4"
+                 [style.background]="'rgba(' + colorToRgb(a.color) + ',0.1)'">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;" [style.color]="a.color">{{ a.tag }}</span>
+            </div>
+            <h3 style="font-size:1.15rem;font-weight:800;margin-bottom:8px;" [style.color]="a.color">{{ a.role }}</h3>
+            <p style="font-size:0.85rem;color:#8888aa;line-height:1.65;">{{ a.desc }}</p>
+          </div>
+        }
+      </div>
+
+      <!-- Multi-agent workflow SVG -->
+      <div class="section-reveal delay-200 rounded-2xl p-6 md:p-10 scan-container mb-12"
            style="background:rgba(255,255,255,0.02);border:1px solid #1e1e38;">
         <div class="overflow-x-auto">
-          <svg viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg" class="w-full" style="min-width:680px;max-height:380px;">
+          <svg viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" class="w-full" style="min-width:620px;max-height:340px;">
             <defs>
-              <linearGradient id="lineGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#00F5D4" stop-opacity="0.7"/>
                 <stop offset="100%" stop-color="#7C3AED" stop-opacity="0.7"/>
               </linearGradient>
-              <linearGradient id="mergeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <linearGradient id="mg" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stop-color="#00F5D4"/>
                 <stop offset="50%" stop-color="#7C3AED"/>
                 <stop offset="100%" stop-color="#FF6B35"/>
               </linearGradient>
-              <filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <filter id="glow2"><feGaussianBlur stdDeviation="3" result="cb"/><feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
             </defs>
-            <!-- Base lines -->
-            <line x1="450" y1="85" x2="150" y2="195" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
-            <line x1="450" y1="85" x2="300" y2="195" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
-            <line x1="450" y1="85" x2="450" y2="195" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
-            <line x1="450" y1="85" x2="600" y2="195" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
-            <line x1="450" y1="85" x2="750" y2="195" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
-            <line x1="150" y1="255" x2="450" y2="320" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
-            <line x1="300" y1="255" x2="450" y2="320" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
-            <line x1="450" y1="255" x2="450" y2="320" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
-            <line x1="600" y1="255" x2="450" y2="320" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
-            <line x1="750" y1="255" x2="450" y2="320" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
-            <!-- Animated colour lines -->
-            <line x1="450" y1="85" x2="450" y2="195" class="svg-line" stroke="#00F5D4" stroke-width="1.5" opacity="0.6"/>
-            <line x1="450" y1="85" x2="150" y2="195" class="svg-line" stroke="url(#lineGrad1)" stroke-width="1" opacity="0.5" style="animation-delay:0.2s"/>
-            <line x1="450" y1="85" x2="750" y2="195" class="svg-line" stroke="url(#lineGrad1)" stroke-width="1" opacity="0.5" style="animation-delay:0.4s"/>
-            <!-- Orchestrator -->
-            <g class="workflow-node workflow-node-1" transform="translate(450,45)" filter="url(#glow)">
-              <rect x="-82" y="-32" width="164" height="62" rx="14" fill="#0f0f1a" stroke="#00F5D4" stroke-width="1.5"/>
-              <rect x="-82" y="-32" width="164" height="62" rx="14" fill="url(#lineGrad1)" opacity="0.15"/>
-              <text x="0" y="-9" text-anchor="middle" fill="#00F5D4" font-family="JetBrains Mono" font-size="9" letter-spacing="1">ORCHESTRATOR</text>
-              <text x="0" y="11" text-anchor="middle" fill="#f0f0ff" font-family="Syne" font-size="13" font-weight="700">Claude Agent</text>
-              <circle cx="57" cy="-20" r="5" fill="#00F5D4" opacity="0.9"/>
-              <circle cx="57" cy="-20" r="9" fill="#00F5D4" opacity="0.15" style="animation:ping-slow 2s cubic-bezier(0,0,0.2,1) infinite;"/>
+            <line x1="450" y1="75" x2="150" y2="175" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <line x1="450" y1="75" x2="300" y2="175" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <line x1="450" y1="75" x2="450" y2="175" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <line x1="450" y1="75" x2="600" y2="175" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <line x1="450" y1="75" x2="750" y2="175" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <line x1="150" y1="235" x2="450" y2="300" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <line x1="300" y1="235" x2="450" y2="300" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <line x1="450" y1="235" x2="450" y2="300" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <line x1="600" y1="235" x2="450" y2="300" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <line x1="750" y1="235" x2="450" y2="300" stroke="#1e1e38" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <line x1="450" y1="75" x2="450" y2="175" class="svg-line" stroke="#00F5D4" stroke-width="1.5" opacity="0.6"/>
+            <line x1="450" y1="75" x2="150" y2="175" class="svg-line" stroke="url(#lg1)" stroke-width="1" opacity="0.5" style="animation-delay:0.2s"/>
+            <line x1="450" y1="75" x2="750" y2="175" class="svg-line" stroke="url(#lg1)" stroke-width="1" opacity="0.5" style="animation-delay:0.4s"/>
+            <g class="workflow-node workflow-node-1" transform="translate(450,38)" filter="url(#glow2)">
+              <rect x="-80" y="-28" width="160" height="56" rx="12" fill="#0f0f1a" stroke="#00F5D4" stroke-width="1.5"/>
+              <rect x="-80" y="-28" width="160" height="56" rx="12" fill="url(#lg1)" opacity="0.12"/>
+              <text x="0" y="-7" text-anchor="middle" fill="#00F5D4" font-family="JetBrains Mono" font-size="8.5" letter-spacing="1">ORCHESTRATOR</text>
+              <text x="0" y="11" text-anchor="middle" fill="#f0f0ff" font-family="Syne" font-size="12" font-weight="700">Claude Agent</text>
+              <circle cx="55" cy="-16" r="4.5" fill="#00F5D4" opacity="0.9"/>
+              <circle cx="55" cy="-16" r="9" fill="#00F5D4" opacity="0.12" style="animation:ping-slow 2s cubic-bezier(0,0,0.2,1) infinite;"/>
             </g>
-            <!-- Agent nodes -->
-            <g class="workflow-node workflow-node-2" transform="translate(150,225)">
-              <rect x="-58" y="-28" width="116" height="56" rx="11" fill="#0f0f1a" stroke="#FF6B35" stroke-width="1.2"/>
-              <text x="0" y="-8" text-anchor="middle" fill="#FF6B35" font-family="JetBrains Mono" font-size="8" letter-spacing="1">SECURITY</text>
-              <text x="0" y="9" text-anchor="middle" fill="#f0f0ff" font-family="Syne" font-size="11" font-weight="600">Audit Agent</text>
+            <rect x="115" y="143" width="670" height="18" rx="4" fill="rgba(124,58,237,0.07)" stroke="rgba(124,58,237,0.18)" stroke-width="0.5"/>
+            <text x="450" y="156" text-anchor="middle" fill="#9d5ff0" font-family="JetBrains Mono" font-size="8" letter-spacing="2">PARALLEL EXECUTION</text>
+            <g class="workflow-node workflow-node-2" transform="translate(150,205)">
+              <rect x="-56" y="-26" width="112" height="52" rx="10" fill="#0f0f1a" stroke="#FF6B35" stroke-width="1.2"/>
+              <text x="0" y="-7" text-anchor="middle" fill="#FF6B35" font-family="JetBrains Mono" font-size="8" letter-spacing="1">SECURITY</text>
+              <text x="0" y="8" text-anchor="middle" fill="#f0f0ff" font-family="Syne" font-size="10" font-weight="600">Audit Agent</text>
             </g>
-            <g class="workflow-node workflow-node-3" transform="translate(300,225)">
-              <rect x="-58" y="-28" width="116" height="56" rx="11" fill="#0f0f1a" stroke="#7C3AED" stroke-width="1.2"/>
-              <text x="0" y="-8" text-anchor="middle" fill="#9d5ff0" font-family="JetBrains Mono" font-size="8" letter-spacing="1">BACKEND</text>
-              <text x="0" y="9" text-anchor="middle" fill="#f0f0ff" font-family="Syne" font-size="11" font-weight="600">API Agent</text>
+            <g class="workflow-node workflow-node-3" transform="translate(300,205)">
+              <rect x="-56" y="-26" width="112" height="52" rx="10" fill="#0f0f1a" stroke="#7C3AED" stroke-width="1.2"/>
+              <text x="0" y="-7" text-anchor="middle" fill="#9d5ff0" font-family="JetBrains Mono" font-size="8" letter-spacing="1">BACKEND</text>
+              <text x="0" y="8" text-anchor="middle" fill="#f0f0ff" font-family="Syne" font-size="10" font-weight="600">API Agent</text>
             </g>
-            <g class="workflow-node workflow-node-3" transform="translate(450,225)">
-              <rect x="-58" y="-28" width="116" height="56" rx="11" fill="#0f0f1a" stroke="#00F5D4" stroke-width="1.5"/>
-              <text x="0" y="-8" text-anchor="middle" fill="#00F5D4" font-family="JetBrains Mono" font-size="8" letter-spacing="1">FRONTEND</text>
-              <text x="0" y="9" text-anchor="middle" fill="#f0f0ff" font-family="Syne" font-size="11" font-weight="600">UI Agent</text>
+            <g class="workflow-node workflow-node-3" transform="translate(450,205)">
+              <rect x="-56" y="-26" width="112" height="52" rx="10" fill="#0f0f1a" stroke="#00F5D4" stroke-width="1.5"/>
+              <text x="0" y="-7" text-anchor="middle" fill="#00F5D4" font-family="JetBrains Mono" font-size="8" letter-spacing="1">FRONTEND</text>
+              <text x="0" y="8" text-anchor="middle" fill="#f0f0ff" font-family="Syne" font-size="10" font-weight="600">UI Agent</text>
             </g>
-            <g class="workflow-node workflow-node-4" transform="translate(600,225)">
-              <rect x="-58" y="-28" width="116" height="56" rx="11" fill="#0f0f1a" stroke="#7C3AED" stroke-width="1.2"/>
-              <text x="0" y="-8" text-anchor="middle" fill="#9d5ff0" font-family="JetBrains Mono" font-size="8" letter-spacing="1">TESTING</text>
-              <text x="0" y="9" text-anchor="middle" fill="#f0f0ff" font-family="Syne" font-size="11" font-weight="600">QA Agent</text>
+            <g class="workflow-node workflow-node-4" transform="translate(600,205)">
+              <rect x="-56" y="-26" width="112" height="52" rx="10" fill="#0f0f1a" stroke="#7C3AED" stroke-width="1.2"/>
+              <text x="0" y="-7" text-anchor="middle" fill="#9d5ff0" font-family="JetBrains Mono" font-size="8" letter-spacing="1">TESTING</text>
+              <text x="0" y="8" text-anchor="middle" fill="#f0f0ff" font-family="Syne" font-size="10" font-weight="600">QA Agent</text>
             </g>
-            <g class="workflow-node workflow-node-4" transform="translate(750,225)">
-              <rect x="-58" y="-28" width="116" height="56" rx="11" fill="#0f0f1a" stroke="#FF6B35" stroke-width="1.2"/>
-              <text x="0" y="-8" text-anchor="middle" fill="#FF6B35" font-family="JetBrains Mono" font-size="8" letter-spacing="1">DOCS</text>
-              <text x="0" y="9" text-anchor="middle" fill="#f0f0ff" font-family="Syne" font-size="11" font-weight="600">Writer Agent</text>
+            <g class="workflow-node workflow-node-4" transform="translate(750,205)">
+              <rect x="-56" y="-26" width="112" height="52" rx="10" fill="#0f0f1a" stroke="#FF6B35" stroke-width="1.2"/>
+              <text x="0" y="-7" text-anchor="middle" fill="#FF6B35" font-family="JetBrains Mono" font-size="8" letter-spacing="1">DOCS</text>
+              <text x="0" y="8" text-anchor="middle" fill="#f0f0ff" font-family="Syne" font-size="10" font-weight="600">Writer Agent</text>
             </g>
-            <!-- Parallel label -->
-            <rect x="118" y="157" width="664" height="20" rx="4" fill="rgba(124,58,237,0.07)" stroke="rgba(124,58,237,0.18)" stroke-width="0.5"/>
-            <text x="450" y="171" text-anchor="middle" fill="#9d5ff0" font-family="JetBrains Mono" font-size="8.5" letter-spacing="2">PARALLEL EXECUTION</text>
-            <!-- Merged output -->
-            <g class="workflow-node workflow-node-5" transform="translate(450,350)" filter="url(#glow)">
-              <rect x="-82" y="-24" width="164" height="48" rx="12" fill="#0f0f1a" stroke="url(#mergeGrad)" stroke-width="1.5"/>
-              <text x="0" y="-4" text-anchor="middle" fill="#f0f0ff" font-family="Syne" font-size="12" font-weight="700">Merged Output</text>
-              <text x="0" y="11" text-anchor="middle" fill="#8888aa" font-family="JetBrains Mono" font-size="8">validated · tested · shipped</text>
+            <g class="workflow-node workflow-node-5" transform="translate(450,318)" filter="url(#glow2)">
+              <rect x="-80" y="-22" width="160" height="44" rx="10" fill="#0f0f1a" stroke="url(#mg)" stroke-width="1.5"/>
+              <text x="0" y="-3" text-anchor="middle" fill="#f0f0ff" font-family="Syne" font-size="11" font-weight="700">Merged Output</text>
+              <text x="0" y="11" text-anchor="middle" fill="#8888aa" font-family="JetBrains Mono" font-size="7.5">validated · tested · shipped</text>
             </g>
           </svg>
         </div>
-        <!-- Legend -->
-        <div class="flex flex-wrap items-center justify-center gap-6 mt-5 pt-5" style="border-top:1px solid #1e1e38;">
-          @for (item of [
-            { color:'#00F5D4', label:'Orchestrator' },
-            { color:'#7C3AED', label:'Specialist Agents' },
-            { color:'#FF6B35', label:'Output Validators' }
-          ]; track item.label) {
-            <div class="flex items-center gap-2">
-              <div class="w-4 h-0.5 rounded" [style.background]="item.color"></div>
-              <span style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#8888aa;">{{ item.label }}</span>
-            </div>
-          }
-          <div class="flex items-center gap-2">
-            <div style="width:16px;height:1px;border-top:1px dashed #4a4a6a;"></div>
-            <span style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#4a4a6a;">Channel</span>
-          </div>
-        </div>
       </div>
 
-      <!-- Steps -->
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
-        @for (step of [
-          { n:'01', t:'Decompose', d:'Orchestrator splits goal into parallel work streams', c:'#00F5D4' },
-          { n:'02', t:'Delegate', d:'Sub-agents receive context and begin autonomous execution', c:'#7C3AED' },
-          { n:'03', t:'Execute', d:'Agents run tools, write code, call APIs simultaneously', c:'#FF6B35' },
-          { n:'04', t:'Synthesize', d:'Orchestrator merges and validates all outputs into one result', c:'#00F5D4' }
-        ]; track step.n) {
-          <div class="section-reveal rounded-xl p-5" [class]="'delay-' + ($index + 1) * 100"
-               style="background:rgba(255,255,255,0.025);border:1px solid #1e1e38;">
-            <div style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;margin-bottom:6px;" [style.color]="step.c">{{ step.n }}</div>
-            <div style="font-size:0.95rem;font-weight:700;color:#f0f0ff;margin-bottom:5px;">{{ step.t }}</div>
-            <div style="font-size:0.8rem;color:#8888aa;line-height:1.5;">{{ step.d }}</div>
-          </div>
+      <!-- Resources -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 section-reveal delay-200">
+        @for (r of agentResources; track r.title; let i = $index) {
+          <a [href]="r.url" target="_blank" rel="noopener"
+             class="card-glow rounded-xl p-5 flex flex-col gap-3 no-underline" [class]="'delay-' + ((i+1)*100)"
+             style="background:rgba(255,255,255,0.025);">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center"
+                 [style.background]="'rgba(' + colorToRgb(r.color) + ',0.12)'">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" [attr.stroke]="r.color" stroke-width="2" stroke-linecap="round">
+                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </div>
+            <div style="font-size:0.88rem;font-weight:700;" [style.color]="r.color">{{ r.title }}</div>
+            <div style="font-size:0.76rem;color:#4a4a6a;font-family:'JetBrains Mono',monospace;">docs.anthropic.com →</div>
+          </a>
         }
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════ TERMINAL DEMO ═══ -->
-  <section class="py-16 px-6">
-    <div class="max-w-4xl mx-auto">
-      <div class="section-reveal rounded-2xl overflow-hidden"
-           style="background:#080810;border:1px solid #1e1e38;box-shadow:0 40px 80px rgba(0,0,0,0.5);">
-        <div class="flex items-center gap-2 px-5 py-3.5" style="background:#0d0d1c;border-bottom:1px solid #1e1e38;">
-          <div class="w-3 h-3 rounded-full" style="background:#FF5F57;"></div>
-          <div class="w-3 h-3 rounded-full" style="background:#FEBC2E;"></div>
-          <div class="w-3 h-3 rounded-full" style="background:#28C840;"></div>
-          <span class="mx-auto" style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#4a4a6a;">claude-code — agent session</span>
-        </div>
-        <div class="p-6 md:p-8" style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;line-height:1.9;">
-          <div style="color:#4a4a6a;">$ claude "Build a full auth system with JWT, refresh tokens, and rate limiting"</div>
-          <br>
-          <div style="color:#00F5D4;">▶ Orchestrator initialized</div>
-          <div style="color:#8888aa;padding-left:16px;">Analyzing requirements... decomposing into 4 parallel tasks</div>
-          <br>
-          <div style="color:#9d5ff0;">⟳ Spawning sub-agents in parallel:</div>
-          <div style="padding-left:16px;">
-            <div><span style="color:#00F5D4;">[agent-1]</span><span style="color:#8888aa;"> JWT implementation + token rotation</span></div>
-            <div><span style="color:#7C3AED;">[agent-2]</span><span style="color:#8888aa;"> Refresh token DB schema + Redis cache</span></div>
-            <div><span style="color:#FF6B35;">[agent-3]</span><span style="color:#8888aa;"> Rate limiting middleware (sliding window)</span></div>
-            <div><span style="color:#00F5D4;">[agent-4]</span><span style="color:#8888aa;"> Integration tests + security audit</span></div>
-          </div>
-          <br>
-          <div style="color:#39FF14;">✓ agent-1 complete &nbsp;✓ agent-3 complete</div>
-          <div style="color:#39FF14;">✓ agent-2 complete &nbsp;✓ agent-4 complete — 0 vulnerabilities</div>
-          <br>
-          <div style="color:#00F5D4;">▶ Synthesizing... merging 847 lines across 12 files</div>
-          <div style="color:#39FF14;font-weight:600;">✓ Done in 43s — full auth system shipped</div>
-          <div style="color:#4a4a6a;font-size:0.7rem;">Equivalent manual effort: ~3–4 hours</div>
-          <br>
-          <span style="color:#4a4a6a;">$ </span><span class="terminal-cursor" style="color:#00F5D4;"></span>
-        </div>
-      </div>
+  <!-- ══════════════════════════════════════════ PRACTICES ═══ -->
+  <section id="practices" class="py-28 px-6 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute rounded-full" style="width:600px;height:600px;top:30%;right:0;background:radial-gradient(circle,rgba(0,245,212,0.04) 0%,transparent 65%);"></div>
     </div>
-  </section>
+    <div class="max-w-6xl mx-auto relative z-10">
 
-  <!-- ══════════════════════════════════════════════════ USE CASES ═══ -->
-  <section id="use-cases" class="py-28 px-6">
-    <div class="max-w-6xl mx-auto">
       <div class="text-center mb-16 section-reveal">
         <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5"
-             style="background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.25);">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#FF6B35;letter-spacing:0.12em;">REAL-WORLD APPLICATIONS</span>
+             style="background:rgba(0,245,212,0.08);border:1px solid rgba(0,245,212,0.2);">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#00F5D4;letter-spacing:0.12em;">GOOD PRACTICES TO FOLLOW</span>
         </div>
-        <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;color:#f0f0ff;letter-spacing:-0.02em;">
-          Agents in the real world
+        <h2 style="font-size:clamp(2rem,4vw,2.8rem);font-weight:800;color:#f0f0ff;letter-spacing:-0.02em;">
+          The habits that compound
         </h2>
       </div>
 
-      <div class="space-y-5">
-        @for (uc of useCases; track uc.number; let i = $index) {
-          <div class="card-glow section-reveal rounded-2xl p-7 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start"
-               [class]="'delay-' + (i * 200)"
-               style="background:rgba(255,255,255,0.02);">
-            <div>
-              <div style="font-family:'JetBrains Mono',monospace;font-size:2.8rem;font-weight:300;line-height:1;opacity:0.3;" [style.color]="uc.accent">{{ uc.number }}</div>
-              <h3 style="font-size:1.2rem;font-weight:700;color:#f0f0ff;margin-top:6px;line-height:1.3;">{{ uc.title }}</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-20">
+        @for (p of goodPractices; track p.n; let i = $index) {
+          <div class="card-glow rounded-2xl p-6 section-reveal" [class]="'delay-' + ((i%3+1)*100)"
+               style="background:rgba(255,255,255,0.025);">
+            <div class="flex items-start justify-between mb-4">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:300;line-height:1;opacity:0.2;" [style.color]="p.color">{{ p.n }}</div>
+              <div class="inline-flex items-center px-2 py-0.5 rounded"
+                   [style.background]="'rgba(' + colorToRgb(p.color) + ',0.1)'">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;" [style.color]="p.color">{{ p.tag }}</span>
+              </div>
             </div>
-            <p style="font-size:0.88rem;line-height:1.7;color:#8888aa;padding-top:6px;">{{ uc.description }}</p>
-            <div class="space-y-2.5">
-              @for (step of uc.steps; track step; let si = $index) {
-                <div class="flex items-center gap-3">
-                  <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
-                       [style.background]="'rgba(' + colorToRgb(uc.accent) + ',0.12)'"
-                       [style.border]="'1px solid rgba(' + colorToRgb(uc.accent) + ',0.25)'">
-                    <span style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;font-weight:600;" [style.color]="uc.accent">{{ si + 1 }}</span>
-                  </div>
-                  <span style="font-size:0.83rem;color:#f0f0ff;">{{ step }}</span>
-                </div>
-              }
-            </div>
+            <h3 style="font-size:0.95rem;font-weight:700;color:#f0f0ff;margin-bottom:6px;">{{ p.title }}</h3>
+            <p style="font-size:0.8rem;color:#8888aa;line-height:1.6;">{{ p.desc }}</p>
           </div>
         }
       </div>
-    </div>
-  </section>
 
-  <!-- ══════════════════════════════════════════════════ MEMORY ═══ -->
-  <section class="py-16 px-6">
-    <div class="max-w-5xl mx-auto">
-      <div class="section-reveal rounded-3xl p-8 md:p-14 relative overflow-hidden"
-           style="background:linear-gradient(135deg,rgba(124,58,237,0.11) 0%,rgba(0,245,212,0.06) 100%);border:1px solid rgba(124,58,237,0.22);">
-        <div class="absolute inset-0 pointer-events-none">
-          <div class="absolute rounded-full float-anim-2" style="width:320px;height:320px;top:-120px;right:-80px;background:radial-gradient(circle,rgba(124,58,237,0.15) 0%,transparent 70%);"></div>
+      <!-- Bad practices -->
+      <div class="section-reveal">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full"
+               style="background:rgba(255,107,53,0.09);border:1px solid rgba(255,107,53,0.22);">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#FF6B35;letter-spacing:0.1em;">ANTI-PATTERNS — AVOID THESE</span>
+          </div>
+          <div class="flex-1 h-px" style="background:linear-gradient(to right,rgba(255,107,53,0.2),transparent);"></div>
         </div>
-        <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-center">
-          <div>
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5"
-                 style="background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);width:fit-content;">
-              <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#9d5ff0;letter-spacing:0.1em;">PERSISTENT MEMORY</span>
-            </div>
-            <h2 style="font-size:2rem;font-weight:800;color:#f0f0ff;line-height:1.15;letter-spacing:-0.02em;">
-              Agents that grow smarter over time
-            </h2>
-            <p class="mt-4" style="color:#8888aa;line-height:1.75;font-size:0.92rem;">
-              Unlike stateless AI calls, Claude Code agents maintain a <strong style="color:#f0f0ff;">persistent memory directory</strong> — recording architectural decisions, project conventions, and debugging insights that accumulate across every session.
-            </p>
-            <div class="mt-6 space-y-3">
-              @for (item of ['Project-specific patterns and conventions','Architectural decisions with rationale','Previously solved bugs and edge cases','Team preferences and workflow styles']; track item) {
-                <div class="flex items-start gap-3">
-                  <div class="w-4 h-4 rounded-full mt-0.5 shrink-0 flex items-center justify-center"
-                       style="background:rgba(124,58,237,0.18);border:1px solid rgba(124,58,237,0.35);">
-                    <div class="w-1.5 h-1.5 rounded-full" style="background:#9d5ff0;"></div>
-                  </div>
-                  <span style="font-size:0.84rem;color:#c0c0dd;">{{ item }}</span>
-                </div>
-              }
+
+        <!-- Video placeholder -->
+        <div class="rounded-2xl overflow-hidden mb-6" style="border:1px solid rgba(255,107,53,0.2);">
+          <div class="relative flex items-center justify-center"
+               style="background:linear-gradient(135deg,rgba(255,107,53,0.06) 0%,rgba(5,5,8,0.9) 100%);min-height:220px;">
+            <div class="absolute inset-0 grid-bg opacity-30"></div>
+            <div class="relative z-10 flex flex-col items-center gap-4 text-center px-6">
+              <div class="w-16 h-16 rounded-full flex items-center justify-center"
+                   style="background:rgba(255,107,53,0.15);border:2px solid rgba(255,107,53,0.4);">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#FF6B35">
+                  <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+              </div>
+              <div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#FF6B35;letter-spacing:0.1em;margin-bottom:4px;">VIDEO COMING SOON</div>
+                <div style="font-size:1rem;font-weight:700;color:#f0f0ff;">Bad Claude Code practices — real examples</div>
+                <div style="font-size:0.8rem;color:#8888aa;margin-top:4px;">How token waste, vague prompts, and no-review workflows break teams</div>
+              </div>
             </div>
           </div>
-          <!-- Memory file preview -->
-          <div class="rounded-xl p-5" style="background:rgba(0,0,0,0.4);border:1px solid #1e1e38;font-family:'JetBrains Mono',monospace;font-size:0.74rem;">
-            <div class="flex items-center gap-2 mb-4 pb-3" style="border-bottom:1px solid #1e1e38;">
-              <div class="w-2 h-2 rounded-full" style="background:#9d5ff0;animation:dataPulse 2s ease-in-out infinite;"></div>
-              <span style="color:#4a4a6a;">MEMORY.md</span>
-              <span class="ml-auto" style="color:#2a2a4a;font-size:0.62rem;">project-scope</span>
+        </div>
+
+        <!-- Bad practices list -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          @for (bp of badPractices; track bp.title; let i = $index) {
+            <div class="section-reveal rounded-xl p-5" [class]="'delay-' + ((i%4+1)*100)"
+                 style="background:rgba(255,255,255,0.022);border:1px solid #1e1e38;">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="px-2 py-0.5 rounded text-xs"
+                      style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.08em;"
+                      [style.background]="severityBg(bp.severity)"
+                      [style.color]="severityColor(bp.severity)">{{ bp.severity }}</span>
+                <h4 style="font-size:0.88rem;font-weight:700;color:#f0f0ff;">{{ bp.title }}</h4>
+              </div>
+              <div class="rounded-lg px-3 py-2 mb-3" style="background:rgba(0,0,0,0.3);border:1px solid #1e1e38;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#8888aa;">{{ bp.example }}</span>
+              </div>
+              <p style="font-size:0.78rem;color:#8888aa;line-height:1.55;">{{ bp.impact }}</p>
             </div>
-            <div class="space-y-1.5" style="color:#8888aa;line-height:1.8;">
-              <div><span style="color:#9d5ff0;"># Architecture</span></div>
-              <div style="padding-left:8px;color:#6666aa;">- Angular Signals for state (no NgRx)</div>
-              <div style="padding-left:8px;color:#6666aa;">- OnPush change detection enforced</div>
-              <div style="padding-left:8px;color:#6666aa;">- Tailwind v4 via PostCSS JSON config</div>
-              <br>
-              <div><span style="color:#9d5ff0;"># Conventions</span></div>
-              <div style="padding-left:8px;color:#6666aa;">- Component files: kebab-case</div>
-              <div style="padding-left:8px;color:#6666aa;">- Standalone components only</div>
-              <br>
-              <div><span style="color:#9d5ff0;"># Known Issues</span></div>
-              <div style="padding-left:8px;color:#6666aa;">- Lazy routes need explicit types</div>
-              <div style="padding-left:8px;color:#6666aa;">- Zone.js conflict with RxJS v8</div>
-              <br>
-              <span class="terminal-cursor" style="color:#9d5ff0;"></span>
-            </div>
-          </div>
+          }
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════ CTA ═══ -->
-  <section id="cta" class="py-28 px-6 relative overflow-hidden">
+  <!-- ══════════════════════════════════════════ CTA ═══ -->
+  <section class="py-24 px-6 relative overflow-hidden">
     <div class="absolute inset-0 pointer-events-none">
-      <div class="absolute rounded-full" style="width:700px;height:700px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(0,245,212,0.07) 0%,transparent 65%);"></div>
+      <div class="absolute rounded-full" style="width:700px;height:700px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(0,245,212,0.06) 0%,transparent 65%);"></div>
     </div>
     <div class="max-w-3xl mx-auto text-center relative z-10 section-reveal">
       <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-8"
@@ -829,18 +961,18 @@
         <span style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:#00F5D4;letter-spacing:0.12em;">START BUILDING</span>
       </div>
       <h2 class="mb-6"
-          style="font-size:clamp(2.2rem,5vw,4rem);font-weight:800;color:#f0f0ff;line-height:1.1;letter-spacing:-0.03em;">
-        Your engineering team,<br><span class="gradient-text">now autonomous.</span>
+          style="font-size:clamp(2rem,5vw,3.5rem);font-weight:800;color:#f0f0ff;line-height:1.1;letter-spacing:-0.03em;">
+        You now have the full<br><span class="gradient-text">playbook.</span>
       </h2>
-      <p class="mb-10" style="color:#8888aa;font-size:1rem;line-height:1.75;max-width:480px;margin-left:auto;margin-right:auto;">
-        Deploy Claude Code agents today. Start with a single task, scale to a full multi-agent workflow. No infrastructure required.
+      <p class="mb-10" style="color:#8888aa;font-size:1rem;line-height:1.75;max-width:460px;margin-left:auto;margin-right:auto;">
+        From /init to multi-agent workflows. Put these practices to work and watch your engineering velocity compound.
       </p>
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
         <a href="https://claude.ai/code" target="_blank" rel="noopener"
            class="shimmer-btn px-10 py-4 rounded-xl font-bold inline-flex items-center gap-2 transition-all duration-300 hover:scale-105"
-           style="background:linear-gradient(135deg,#00F5D4,#00b89e);color:#050508;font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;box-shadow:0 0 40px rgba(0,245,212,0.22);">
+           style="background:linear-gradient(135deg,#00F5D4,#00b89e);color:#050508;font-family:'Syne',sans-serif;font-weight:700;font-size:0.92rem;box-shadow:0 0 40px rgba(0,245,212,0.2);">
           Open Claude Code
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
         </a>
         <a href="https://docs.anthropic.com" target="_blank" rel="noopener"
            class="px-10 py-4 rounded-xl font-semibold inline-flex items-center gap-2 transition-all duration-300 hover:scale-105"
@@ -848,30 +980,38 @@
           Read the Docs
         </a>
       </div>
-      <div class="flex flex-wrap justify-center gap-2.5">
-        @for (feat of ['No infrastructure','Multi-agent by default','Tool-native','Persistent memory','Parallel execution','Open source CLI']; track feat) {
-          <span class="px-3 py-1.5 rounded-full"
-                style="background:rgba(255,255,255,0.04);border:1px solid #1e1e38;font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#8888aa;">
-            {{ feat }}
-          </span>
-        }
-      </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════ FOOTER ═══ -->
+  <!-- ══════════════════════════════════════════ FOOTER ═══ -->
   <footer class="px-6 py-8" style="border-top:1px solid #1e1e38;">
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <div class="w-6 h-6 rounded-md flex items-center justify-center" style="background:linear-gradient(135deg,#00F5D4,#7C3AED);">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" fill="white"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2">
+          <div class="w-6 h-6 rounded-md flex items-center justify-center" style="background:linear-gradient(135deg,#00F5D4,#7C3AED);">
+            <svg width="11" height="11" viewBox="0 0 100 100" fill="none">
+              <path d="M57 12H43L8 88h17l6-16h38l6 16h17L57 12zm-7 13 13 35H37l13-35z" fill="white"/>
+            </svg>
+          </div>
+          <span style="font-family:'Syne Mono',monospace;font-size:0.76rem;color:#4a4a6a;">claude_code · playbook</span>
         </div>
-        <span style="font-family:'Syne Mono',monospace;font-size:0.78rem;color:#4a4a6a;">claude_agents · powered by Anthropic</span>
+        <div class="flex items-center gap-3">
+          <a href="https://insight-ex.com" target="_blank" rel="noopener"
+             class="px-2 py-1 rounded transition-opacity hover:opacity-80"
+             style="background:rgba(0,245,212,0.05);border:1px solid rgba(0,245,212,0.1);">
+            <span style="font-family:'Syne Mono',monospace;font-size:0.65rem;color:#00F5D4;">InsightEx</span>
+          </a>
+          <a href="https://gti-intl.com" target="_blank" rel="noopener"
+             class="px-2 py-1 rounded transition-opacity hover:opacity-80"
+             style="background:rgba(124,58,237,0.05);border:1px solid rgba(124,58,237,0.1);">
+            <span style="font-family:'Syne Mono',monospace;font-size:0.65rem;color:#9d5ff0;">GTI Intl</span>
+          </a>
+        </div>
       </div>
       <div class="flex items-center gap-6">
-        @for (link of [{t:'Documentation',u:'https://docs.anthropic.com'},{t:'Claude.ai',u:'https://claude.ai'},{t:'GitHub',u:'https://github.com/anthropics'}]; track link.t) {
-          <a [href]="link.u" target="_blank" rel="noopener" class="nav-link">{{ link.t }}</a>
-        }
+        <a href="https://docs.anthropic.com" target="_blank" rel="noopener" class="nav-link">Documentation</a>
+        <a href="https://claude.ai/code" target="_blank" rel="noopener" class="nav-link">Claude Code</a>
+        <a href="https://github.com/anthropics" target="_blank" rel="noopener" class="nav-link">GitHub</a>
       </div>
       <span style="font-family:'JetBrains Mono',monospace;font-size:0.66rem;color:#2a2a4a;">© 2026 Anthropic</span>
     </div>
