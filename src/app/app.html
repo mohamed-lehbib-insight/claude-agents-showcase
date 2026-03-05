@@ -487,12 +487,12 @@
             Author a skill in<br>under 5 minutes
           </h3>
           <p style="font-size:0.88rem;color:#8888aa;line-height:1.7;margin-bottom:20px;">
-            Skills live in <code style="background:rgba(255,255,255,0.06);color:#FF6B35;padding:2px 6px;border-radius:4px;font-size:0.8rem;">.claude/skills/</code> as Markdown files. Add a YAML frontmatter block with a name and trigger, write the prompt body, and the skill becomes instantly available across every Claude Code session.
+            Skills live in <code style="background:rgba(255,255,255,0.06);color:#FF6B35;padding:2px 6px;border-radius:4px;font-size:0.8rem;">.claude/skills/&lt;name&gt;/SKILL.md</code>. Each skill is a folder containing a <code style="background:rgba(255,255,255,0.06);color:#FF6B35;padding:2px 6px;border-radius:4px;font-size:0.8rem;">SKILL.md</code> with YAML frontmatter and a prompt body — instantly available across every Claude Code session.
           </p>
           <div class="flex flex-col gap-3">
             @for (step of [
-              { n:'1', t:'Create the file', d:'.claude/skills/my-skill.md' },
-              { n:'2', t:'Add YAML frontmatter', d:'name, description, trigger' },
+              { n:'1', t:'Create the folder', d:'.claude/skills/my-skill/' },
+              { n:'2', t:'Add SKILL.md', d:'YAML frontmatter + prompt body' },
               { n:'3', t:'Write the prompt', d:'instructions, context, examples' },
               { n:'4', t:'Invoke it', d:'/my-skill in any session' }
             ]; track step.n) {
@@ -517,27 +517,26 @@
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2">
                 <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
               </svg>
-              <span style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#8888aa;">.claude/skills/deploy-preview.md</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#8888aa;">.claude/skills/ship/SKILL.md</span>
             </div>
           </div>
           <div class="p-5" style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;line-height:1.9;overflow-x:auto;">
             <div style="color:#4a4a6a;">---</div>
-            <div><span style="color:#00F5D4;">name</span><span style="color:#8888aa;">: </span><span style="color:#f0f0ff;">deploy-preview</span></div>
-            <div><span style="color:#00F5D4;">description</span><span style="color:#8888aa;">: </span><span style="color:#f0f0ff;">"Build & deploy a preview URL"</span></div>
-            <div><span style="color:#00F5D4;">trigger</span><span style="color:#8888aa;">: </span><span style="color:#FF6B35;">/deploy-preview</span></div>
+            <div><span style="color:#00F5D4;">name</span><span style="color:#8888aa;">: </span><span style="color:#f0f0ff;">ship</span></div>
+            <div><span style="color:#00F5D4;">description</span><span style="color:#8888aa;">: </span><span style="color:#f0f0ff;">"Init, commit, GitHub & Vercel deploy"</span></div>
             <div><span style="color:#00F5D4;">model</span><span style="color:#8888aa;">: </span><span style="color:#f0f0ff;">sonnet</span></div>
             <div style="color:#4a4a6a;">---</div>
             <br>
-            <div style="color:#9d5ff0;"># Deploy Preview Skill</div>
+            <div style="color:#9d5ff0;"># Ship Skill</div>
             <br>
-            <div style="color:#8888aa;">When invoked, you will:</div>
+            <div style="color:#8888aa;">You are a deployment agent. When invoked:</div>
             <br>
-            <div><span style="color:#FF6B35;">1.</span><span style="color:#f0f0ff;"> Run </span><code style="color:#00F5D4;">npm run build</code><span style="color:#8888aa;"> and fix any errors</span></div>
-            <div><span style="color:#FF6B35;">2.</span><span style="color:#f0f0ff;"> Execute </span><code style="color:#00F5D4;">vercel --prod=false</code></div>
-            <div><span style="color:#FF6B35;">3.</span><span style="color:#f0f0ff;"> Extract the preview URL from output</span></div>
-            <div><span style="color:#FF6B35;">4.</span><span style="color:#f0f0ff;"> Post it as a GitHub PR comment</span></div>
+            <div><span style="color:#FF6B35;">1.</span><span style="color:#f0f0ff;"> Run </span><code style="color:#00F5D4;">git init</code><span style="color:#8888aa;"> if no repo exists</span></div>
+            <div><span style="color:#FF6B35;">2.</span><span style="color:#f0f0ff;"> Stage files and write a conventional commit</span></div>
+            <div><span style="color:#FF6B35;">3.</span><span style="color:#f0f0ff;"> Run </span><code style="color:#00F5D4;">gh repo create</code><span style="color:#8888aa;"> and push</span></div>
+            <div><span style="color:#FF6B35;">4.</span><span style="color:#f0f0ff;"> Run </span><code style="color:#00F5D4;">vercel --prod --yes</code></div>
             <br>
-            <div style="color:#8888aa;">Always confirm the URL is accessible<br>before reporting success.</div>
+            <div style="color:#8888aa;">Flags: --private --prod<br>--no-github --no-vercel</div>
           </div>
         </div>
       </div>

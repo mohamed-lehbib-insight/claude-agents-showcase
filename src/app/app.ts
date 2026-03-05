@@ -87,6 +87,7 @@ export class App implements AfterViewInit, OnDestroy {
     { cmd: '/claude-api', title: 'Claude API Builder', description: 'Scaffolds full Anthropic SDK integrations: streaming responses, tool use, vision inputs, and multi-turn conversations.', color: '#00F5D4', category: 'AI SDK', steps: ['pick model', 'wire tools', 'stream output', 'handle errors'] },
     { cmd: '/sentry:seer', title: 'Sentry AI Seer', description: 'Queries Sentry with natural language, triages live issues by impact, traces stack frames to source, and auto-generates fix PRs.', color: '#7C3AED', category: 'OBSERVABILITY', steps: ['nl query', 'triage', 'trace source', 'draft fix'] },
     { cmd: '/simplify', title: 'Code Simplifier', description: 'Reviews recently changed code for over-engineering, dead abstractions, and redundancy — then rewrites it leaner without breaking tests.', color: '#FF6B35', category: 'REFACTOR', steps: ['scan changes', 'detect bloat', 'rewrite lean', 'verify tests'] },
+    { cmd: '/ship', title: 'Ship to Production', description: 'Initializes a git repo, generates a conventional commit message from the diff, creates a GitHub repository, and deploys the app to Vercel — all in one command.', color: '#00F5D4', category: 'DEPLOY', steps: ['git init', 'smart commit', 'gh repo create', 'vercel --prod'] },
   ];
 
   // ── Skill creation steps ──────────────────────────────────────────────
@@ -102,7 +103,7 @@ export class App implements AfterViewInit, OnDestroy {
       n: '02',
       title: 'Create the file',
       detail: 'Skills live in .claude/skills/ at your project root. The filename becomes the default trigger slug.',
-      hint: '.claude/\n  skills/\n    deploy-preview.md   ← /deploy-preview\n    db-seed.md          ← /db-seed',
+      hint: '.claude/\n  skills/\n    deploy-preview/\n      SKILL.md        ← /deploy-preview\n    db-seed/\n      SKILL.md        ← /db-seed',
       color: '#7C3AED',
     },
     {
