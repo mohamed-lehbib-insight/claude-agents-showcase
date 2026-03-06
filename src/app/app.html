@@ -878,7 +878,7 @@
         </h2>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-20">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
         @for (p of goodPractices; track p.n; let i = $index) {
           <div class="card-glow rounded-2xl p-6 section-reveal" [class]="'delay-' + ((i%3+1)*100)"
                style="background:rgba(255,255,255,0.025);">
@@ -893,6 +893,91 @@
             <p style="font-size:0.8rem;color:#8888aa;line-height:1.6;">{{ p.desc }}</p>
           </div>
         }
+      </div>
+
+      <!-- Writer / Reviewer pattern — featured card -->
+      <div class="section-reveal delay-200 rounded-2xl p-7 mb-20"
+           style="background:rgba(255,255,255,0.025);border:1px solid rgba(0,245,212,0.15);">
+        <div class="flex flex-col lg:flex-row lg:items-start gap-8">
+
+          <!-- Left: description -->
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-4">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:300;line-height:1;opacity:0.2;color:#00F5D4;">07</div>
+              <div class="inline-flex items-center px-2 py-0.5 rounded" style="background:rgba(0,245,212,0.1);">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;color:#00F5D4;">MULTI-SESSION</span>
+              </div>
+            </div>
+            <h3 style="font-size:1.1rem;font-weight:700;color:#f0f0ff;margin-bottom:10px;">Use a Writer / Reviewer pattern</h3>
+            <p style="font-size:0.82rem;color:#8888aa;line-height:1.7;max-width:420px;">
+              Beyond parallelising work, multiple sessions enable quality-focused workflows.
+              A <strong style="color:#f0f0ff;">fresh context improves code review</strong> — Claude won't be biased toward code it just wrote.
+              Spin up a second agent with no prior context to audit the first agent's output.
+            </p>
+            <div class="mt-4 px-3 py-2 rounded-lg" style="background:rgba(0,0,0,0.3);border:1px solid #1e1e38;display:inline-block;">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#8888aa;">
+                Long context → bias. Fresh context → honest review.
+              </span>
+            </div>
+          </div>
+
+          <!-- Right: Session A/B diagram -->
+          <div class="flex-1 flex flex-col gap-3">
+            <!-- Session A -->
+            <div class="rounded-xl overflow-hidden" style="border:1px solid rgba(0,245,212,0.2);">
+              <div class="px-4 py-2 flex items-center gap-2" style="background:rgba(0,245,212,0.07);border-bottom:1px solid rgba(0,245,212,0.15);">
+                <div class="w-2 h-2 rounded-full" style="background:#00F5D4;"></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#00F5D4;letter-spacing:0.1em;">SESSION A — WRITER</span>
+              </div>
+              <div class="px-4 py-3">
+                <p style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#f0f0ff;line-height:1.6;">
+                  Implement a rate limiter for our API endpoints
+                </p>
+              </div>
+            </div>
+
+            <!-- Arrow -->
+            <div class="flex items-center gap-3 px-2">
+              <div class="flex-1 h-px" style="background:linear-gradient(to right,rgba(0,245,212,0.2),rgba(124,58,237,0.2));"></div>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:#4a4a6a;">output →</span>
+              <div class="flex-1 h-px" style="background:linear-gradient(to right,rgba(124,58,237,0.2),transparent);"></div>
+            </div>
+
+            <!-- Session B -->
+            <div class="rounded-xl overflow-hidden" style="border:1px solid rgba(124,58,237,0.2);">
+              <div class="px-4 py-2 flex items-center gap-2" style="background:rgba(124,58,237,0.07);border-bottom:1px solid rgba(124,58,237,0.15);">
+                <div class="w-2 h-2 rounded-full" style="background:#7C3AED;"></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#9d5ff0;letter-spacing:0.1em;">SESSION B — REVIEWER</span>
+              </div>
+              <div class="px-4 py-3">
+                <p style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#f0f0ff;line-height:1.6;">
+                  Review the rate limiter in <span style="color:#00F5D4;">&#64;src/middleware/rateLimiter.ts</span>. Look for edge cases, race conditions, and consistency with existing middleware patterns.
+                </p>
+              </div>
+            </div>
+
+            <!-- Arrow back -->
+            <div class="flex items-center gap-3 px-2">
+              <div class="flex-1 h-px" style="background:linear-gradient(to right,rgba(124,58,237,0.2),rgba(255,107,53,0.2));"></div>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:#4a4a6a;">feedback →</span>
+              <div class="flex-1 h-px" style="background:linear-gradient(to right,rgba(255,107,53,0.2),transparent);"></div>
+            </div>
+
+            <!-- Session A fixes -->
+            <div class="rounded-xl overflow-hidden" style="border:1px solid rgba(255,107,53,0.2);">
+              <div class="px-4 py-2 flex items-center gap-2" style="background:rgba(255,107,53,0.07);border-bottom:1px solid rgba(255,107,53,0.15);">
+                <div class="w-2 h-2 rounded-full" style="background:#FF6B35;"></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#FF6B35;letter-spacing:0.1em;">SESSION A — REVISE</span>
+              </div>
+              <div class="px-4 py-3">
+                <p style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#f0f0ff;line-height:1.6;">
+                  Here's the review feedback: [Session B output]. Address these issues.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
 
       <!-- Bad practices -->
@@ -1075,7 +1160,7 @@
         <a href="https://claude.ai/code" target="_blank" rel="noopener" class="nav-link">Claude Code</a>
         <a href="https://github.com/anthropics" target="_blank" rel="noopener" class="nav-link">GitHub</a>
       </div>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:0.66rem;color:#2a2a4a;">© 2026 Anthropic</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:0.66rem;color:#2a2a4a;">© 2026 Mohamed Lehbib</span>
     </div>
   </footer>
 
